@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test JSON call</title>
+</head>
+<body>
+<div id="user">
+	
+
+
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+	var _students = [] ;
+	$.getJSON('data_endpoint/json-data-students.php', function (data) {
+		console.log(data) ;	
+		data.students.forEach(function(el, i) {
+
+			for (var j in el) {
+				console.log(j +": "+el[j]) ;	
+			}
+
+			
+		}) ; 
+
+		var _students = data ;
+		
+	}) ;
+</script>
+
+</body>
+</html>
