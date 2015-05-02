@@ -4,7 +4,7 @@
 	<title>DIT App</title>
 </head>
 <body>
-<div id="user">
+<div id="students">
 	
 
 
@@ -12,21 +12,36 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
-	var _students = [] ;
-	$.getJSON('data_endpoint/json-data-students.php', function (data) {
-		console.log(data) ;	
-		data.students.forEach(function(el, i) {
-
-			for (var j in el) {
-				console.log(j +": "+el[j]) ;	
-			}
-
-			
-		}) ; 
-
-		var _students = data ;
+	var _studentsArray = [] ;
+	var getStudents = function(cb) {
+		$.getJSON('data_endpoint/json-data-students.php', function (data) {
+			console.log(data) ;	
+			data.students.forEach(function(el, i) {
+				_studentsArray[i] = el;
+				return;
+			}) ; 
+			return cb();
+		}) ;
 		
-	}) ;
+	}
+	
+
+	var showStudentData = function() {
+
+		console.log("showStudentData");
+		$('#students').append('<table></table>') ;
+		$('#students table').append('<thead></thead>') ;
+		$('#students table').append('<tbody></tbody>') ;
+		for (var i=0; i<_studentsArray.length; i++) {
+			$('#students tbody').append('<tr></tr>') ;
+			$('#students tbody').append($('<p></p>').text(_studentsArray[i].studentID)) ;
+		}		
+	}
+	getStudents(showStudentData) ;
+
+
+	
+	
 </script>
 
 </body>
