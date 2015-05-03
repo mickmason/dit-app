@@ -15,13 +15,20 @@
 	
 </section>
 <script type="text/javascript">
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function(pos) {
-			document.getElementById('geoloc').innerHTML = "Latitude: "+pos.coords.latitude+" Longitude: "+pos.coords.longitude ;	
-		}) ;
-		
-	} else {
+	var latitude = "";
+	var longitude = "" ;
+	var GPSError = "" ;
+	var getDirections = function () {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(pos) {
+				document.getElementById('geoloc').innerHTML = "Latitude: "+pos.coords.latitude+" Longitude: "+pos.coords.longitude ;	
+				latitude = pos.coords.latitude;
+				longitude = pos.coords.longitude;
+			}) ;
+		} else {
 			document.getElementById('geoloc').innerHTML = "Sorry, your device doesn't support this task." ;	
+			GPSerror  = "Sorry, your device doesn't support this task.";
+		}
 	}
 	</script>
 <section id="students">
@@ -50,6 +57,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 	var userType = "student";
+
 	$('#lecturer-user').on('click', function(e) {
 		e.preventDefault();
 		$('body').addClass("lecturer-user");
@@ -75,8 +83,6 @@
 		
 	}
 	var checkUser = function() {
-
-		
 		if (document.cookie.indexOf("DITUser=true") != -1) {
 			console.log("ok") ;
 		} else {
@@ -86,12 +92,9 @@
 	}
 	checkUser();
 	function makeTable() {
-		
-
 		thead = $('<thead></thead>') ;
 		tbody = $('<tbody></tbody>') ;
 		tab = $('<table></table>') ;
-
 		tab.append(thead).append(tbody) ;
 		return tab;
 	} ;
@@ -111,7 +114,6 @@
 		headTr.append($('<td></td>').text('Lat'));
 		$('#modules thead').append(headTr) ;
 
-		
 		for (var i=0; i<data.modules.length; i++) {
 			var tds = [];
 			var j = 0;
