@@ -1,0 +1,5 @@
+#map { min-height: 400px; max-width: 767px; margin: 20px 0; }
+#get-dirs {clear: both;}
+#get-dirs:after {clear: both; content: ""} 
+#get-dirs-start { float: left}
+#get-dirs-end { float: right}

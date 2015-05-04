@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>DIT App</title>
+	<link rel="stylesheet" type="text/css" href="css/app.css">
 </head>
 <body>
 <nav>
@@ -9,43 +10,55 @@
 		<li><a href="#students">Student data</a></li>
 		<li><a href="#modules">Modules data</a></li>
 		<li><a href="#lecturers">Lecturers data</a></li>
+		<li><a href="#map">Map</a></li>
+		<li><a href="#directions">Get directions</a></li>
 	</ul>
 </nav>
-<section id="geoloc">
-	
+
+<section id="home">
+	<h1>Home</h1>
+
+
 </section>
-<script type="text/javascript">
-	var latitude = "";
-	var longitude = "" ;
-	var GPSError = "" ;
-	var getDirections = function () {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(function(pos) {
-				document.getElementById('geoloc').innerHTML = "Latitude: "+pos.coords.latitude+" Longitude: "+pos.coords.longitude ;	
-				latitude = pos.coords.latitude;
-				longitude = pos.coords.longitude;
-			}) ;
-		} else {
-			document.getElementById('geoloc').innerHTML = "Sorry, your device doesn't support this task." ;	
-			GPSerror  = "Sorry, your device doesn't support this task.";
-		}
-	}
-	</script>
 <section id="students">
 	<h1>Student data</h1>
 
 
 </section>
-<section id="modules">
-	<h1>Modules data</h1>
 
-
-</section>
 <section id="lecturers">
-	<h1>Lecturers data</h1>
+	<h1>Lecturers</h1>
 
 
 </section>
+<h1>Get directions</h1>
+<section id="map">
+
+
+</section>
+<section id="get-dirs">
+	<section id="get-dirs-start">
+		<h2 id="get-dirs-start-head">Start point:</h2>
+		<select id="get-dirs-start-sel">
+			<option selected="selected" value="where-i-am">Where I am now</option>
+			<option selected="selected" value="aungier-st">Aungier Street</option>
+			<option selected="selected" value="kevins-st">Kevins Street</option>
+			<option selected="selected" value="bolton-st">Bolton Street</option>
+		</select>
+		
+	</section>
+	<section id="get-dirs-end">
+		<h2 id="get-dirs-end-head">Destination:</h2>
+		<select id="get-dirs-end-sel">
+			<option selected="selected" value="where-i-am">Where I am now</option>
+			<option selected="selected" value="aungier-st">Aungier Street</option>
+			<option selected="selected" value="kevins-st">Kevins Street</option>
+			<option selected="selected" value="bolton-st">Bolton Street</option>
+		</select>
+		
+	</section>
+</section>
+
 <style type="text/css">
 	#user-modal { position: absolute; z-index: 10; top: 10%; left: 10%; background-color: #fff; min-width: 450px; padding: 25px; display: none; }
 </style>
@@ -54,152 +67,9 @@
 	<button id="lecturer-user">A lecturer</button>	
 	<button id="student-user">A student</button>
 </section>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh_EAaBpkQ_PNLu7AJneiyXt69f9R6Nzk"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script type="text/javascript">
-	var userType = "student";
-
-	$('#lecturer-user').on('click', function(e) {
-		e.preventDefault();
-		$('body').addClass("lecturer-user");
-		document.cookie = "DITUser=true" ;
-		$('#user-modal').css('display', 'none') ;
-		alert('Thanks, you can change user type via the main menu') ;
-
-	});
-	$('#student-user').on('click', function(e) {
-		e.preventDefault();
-		$('body').addClass("student-user");
-		document.cookie = "DITUser=true" ;
-		$('#user-modal').css('display', 'none') ;
-		alert('Thanks, you can change user type via the main menu') ;
-	});
-	var _studentsArray = [] ;
-	var getData = function(path, cb) {
-		$.getJSON(path, function (data) {
-			console.log(data) ;	
-			
-			return cb(data);
-		}) ;
-		
-	}
-	var checkUser = function() {
-		if (document.cookie.indexOf("DITUser=true") != -1) {
-			console.log("ok") ;
-		} else {
-			console.log("Not ok") ;
-			$('#user-modal').css('display', 'block') ;
-		}
-	}
-	checkUser();
-	function makeTable() {
-		thead = $('<thead></thead>') ;
-		tbody = $('<tbody></tbody>') ;
-		tab = $('<table></table>') ;
-		tab.append(thead).append(tbody) ;
-		return tab;
-	} ;
-
-	var showModulesData = function(data) {
-		console.log("showModulesData");
-		$('#modules').append(makeTable()) ;
-		
-		headTr =  $('<tr></tr>') ;
-		headTr.append($('<td></td>').text('Module No.'));
-		headTr.append($('<td></td>').text('Module Name'));
-		headTr.append($('<td></td>').text('Credits'));
-		headTr.append($('<td></td>').text('Website'));
-		headTr.append($('<td></td>').text('Due date'));
-		headTr.append($('<td></td>').text('Room'));
-		headTr.append($('<td></td>').text('Long'));
-		headTr.append($('<td></td>').text('Lat'));
-		$('#modules thead').append(headTr) ;
-
-		for (var i=0; i<data.modules.length; i++) {
-			var tds = [];
-			var j = 0;
-			for (var key in data.modules[i]) {
-				tds[j] = $('<td></td>').text(data.modules[i][key]) ;
-				j++;
-			}
-
-
-			tr = $('<tr></tr>') ;
-			for (var j in tds) {
-				tr.append(tds[j]) ;
-			}
-			$('#modules tbody').append(tr) ;
-		}		
-	}//showModulesData()
-	var showStudentData = function(data) {
-		console.log("showStudentData");
-		$('#students').append(makeTable()) ;
-		
-		headTr =  $('<tr></tr>') ;
-		headTr.append($('<td></td>').text('Student ID'));
-		headTr.append($('<td></td>').text('First Name'));
-		headTr.append($('<td></td>').text('Last Name'));
-		headTr.append($('<td></td>').text('Mod 1 ID'));
-		headTr.append($('<td></td>').text('Mod 2 ID'));
-		headTr.append($('<td></td>').text('Course ID'));
-		$('#students thead').append(headTr) ;
-
-		
-		for (var i=0; i<data.students.length; i++) {
-			var tds = [];
-			var j = 0;
-			for (var key in data.students[i]) {
-				tds[j] = $('<td></td>').text(data.students[i][key]) ;
-				j++;
-			}
-
-
-			tr = $('<tr></tr>') ;
-			for (var j in tds) {
-				tr.append(tds[j]) ;
-			}
-			$('#students tbody').append(tr) ;
-		}		
-	}//showStudentsData()
-
-	var showLecturerData = function(data) {
-		console.log("showLecturerData");
-		$('#lecturers').append(makeTable())  ;
-		
-		headTr =  $('<tr></tr>') ;
-		headTr.append($('<td></td>').text('Staff number'));
-		headTr.append($('<td></td>').text('First Name'));
-		headTr.append($('<td></td>').text('Last Name'));
-		headTr.append($('<td></td>').text('Mod 1 ID'));
-		headTr.append($('<td></td>').text('Mod 2 ID'));
-		headTr.append($('<td></td>').text('Email'));
-		$('#lecturers thead').append(headTr) ;
-		for (var i=0; i<data.lecturers.length; i++) {
-			var tds = [];
-			var j = 0;
-			for (var key in data.lecturers[i]) {
-				if (key === "email") {
-					var link = $("<a></a>") ;
-					link.attr('href', 'mailto:'+data.lecturers[i][key]) ;
-					link.text(data.lecturers[i][key]) ;
-					
-					tds[j] = $('<td></td>').append(link) ;
-				} else {
-					tds[j] = $('<td></td>').text(data.lecturers[i][key]) ;	
-				}
-				j++;
-			}
-			tr = $('<tr></tr>') ;
-			for (var j in tds) {
-				tr.append(tds[j]) ;
-			}
-			$('#lecturers tbody').append(tr) ;
-		}		
-	}//showLecturersData()	
-	getData('data_endpoint/json-data-students.php',showStudentData) ;
-	getData('data_endpoint/json-data-lecturers.php',showLecturerData) ;
-	getData('data_endpoint/json-data-modules.php',showModulesData) ;
-	
-	
+<script type="text/javascript" src="js/app.js">
 </script>
 
 </body>
