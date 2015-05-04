@@ -15,28 +15,30 @@
 	</ul>
 </nav>
 
-<section id="home">
+<section class="container" id="home">
 	<h1>Home</h1>
 
 
 </section>
-<section id="students">
+<section class="container" id="students">
 	<h1>Student data</h1>
 
 
 </section>
 
-<section id="lecturers">
+<section class="container" id="lecturers">
 	<h1>Lecturers</h1>
 
 
 </section>
-<h1>Get directions</h1>
-<section id="map">
 
-
+<section class="container" id="map">
+	<h1>Get directions</h1>
+	<section id="map-wrap">
+		
+	</section>
 </section>
-<section id="get-dirs">
+<section class="container" id="get-dirs">
 	<section id="get-dirs-start">
 		<h2 id="get-dirs-start-head">Start point:</h2>
 		<select id="get-dirs-start-sel">
@@ -47,15 +49,17 @@
 		</select>
 		
 	</section>
-	<section id="get-dirs-end">
+	<section  id="get-dirs-end">
 		<h2 id="get-dirs-end-head">Destination:</h2>
 		<select id="get-dirs-end-sel">
-			<option selected="selected" value="where-i-am">Where I am now</option>
 			<option selected="selected" value="aungier-st">Aungier Street</option>
-			<option selected="selected" value="kevins-st">Kevins Street</option>
-			<option selected="selected" value="bolton-st">Bolton Street</option>
+			<option value="kevins-st">Kevins Street</option>
+			<option value="bolton-st">Bolton Street</option>
 		</select>
 		
+	</section>
+	<section class="container" id="get-dirs-go">
+		<button id="get-dirs-go-btn">Go</button>
 	</section>
 </section>
 

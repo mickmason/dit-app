@@ -17,9 +17,20 @@
 		alert('Thanks, you can change user type via the main menu') ;
 	});
 
+	var getAJAXData = function(url, success, xd) {
+		console.log("getAJAXData") ;
+		$.ajax(url, {
+		  success: success
+		})
+	}
 	var getData = function(path, cb) {
-		$.getJSON(path, function (data) {			
-			return cb(data);
+		$.getJSON(path, function (data) {	
+			if (data) {
+				return cb(null, data);	
+			} else {
+				return cb("Sorry no data", null);
+			}
+			
 		}) ;		
 	}
 	var checkUser = function() {
@@ -37,7 +48,11 @@
 		return tab;
 	}//makeTable
 
-	var showModulesData = function(data) {
+	var showModulesData = function(err, data) {
+		if (err) {
+			$('#home').append(err) ;
+			return;
+		}
 		$('#home').append(makeTable()) ;
 		
 		headTr =  $('<tr></tr>') ;
@@ -68,7 +83,11 @@
 			$('#home tbody').append(tr) ;
 		}		
 	}//showModulesData()
-	var showStudentData = function(data) {
+	var showStudentData = function(err, data) {
+		if (err) {
+			$('#students').append(err) ;
+			return;
+		}
 		$('#students').append(makeTable()) ;
 		
 		headTr =  $('<tr></tr>') ;
@@ -98,7 +117,13 @@
 		}		
 	}//showStudentsData()
 
-	var showLecturerData = function(data) {
+	var showLecturerData = function(err, data) {
+
+		if (err) {
+			$('#lecturers').append(err) ;
+			return;
+		}
+
 		$('#lecturers').append(makeTable())  ;
 		
 		headTr =  $('<tr></tr>') ;
@@ -141,13 +166,13 @@
 	***/
 	//Map init centered on Aungier St campus long: 53.338545 lat: -6.26607
 	//Simple Map: 53.338661,-6.267645,15
-	var directionsMap = new google.maps.Map(document.getElementById('map'));
+	var directionsMap = new google.maps.Map(document.getElementById('map-wrap'));
 	var ditLatLngs = {
 		aungierLatLng: 	new google.maps.LatLng(53.338545, -6.26607),
 		kevinsStLatLng: new google.maps.LatLng(53.337015, -6.267933),
 		boltonStLatLng: new google.maps.LatLng(53.351406, -6.268724)
 	}
-
+	var usersLocationObject = null ;
 	function addSimpleMap(locationsObject) {
 		console.log("addSimpleMap") ;
 		var initMaps = function() {
@@ -167,7 +192,6 @@
 	        	}); 
 	        	directionsMap.setCenter(userLoc) ;
 	        }
-
 	        aungierMarker = new google.maps.Marker({
 	        	position: ditLatLngs.aungierLatLng,
 	        	map: directionsMap,
@@ -183,42 +207,63 @@
 	        	map: directionsMap,
 	        	title: "Bolton Street"
 	        }) ;
+	        $(document.getElementById('get-dirs-go-btn')).on('click', function(e) {
+	        	e.preventDefault();
+	        	var url = encodeURI("https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&key=AIzaSyBmggP__Ppp-gh_GRKl_ob8Y6ZT-K6nZIQ");
+	        	console.log(url);
+	        	getAJAXData(url, drawDirections, true) ;
+	        });
 		}
 		initMaps();
-		//google.maps.event.addDomListener(window, 'load', initMaps);
 	}//addSimpleMap
-	function calcRoute(startLatLang, endLatLang, travelmode, ds, dd) {
-			var request = {
-			  origin: startLatLang,
-			  destination: endLatLang,
-			  travelMode: travelmode
-			};
-			ds.route(request, function(response, status) {		    
-				if (status == google.maps.DirectionsStatus.OK) {
-					dd.setDirections(response);
-			  	}
-			});
-	}
-//Get directions
-
-if (navigator.geolocation) {
-
-	navigator.geolocation.getCurrentPosition(function(pos) {
-
-		var userLat = pos.coords.latitude;
-		var userLng = pos.coords.longitude;
-		var locationsObject = {
-			userLatLng: {
-				userLatitude: userLat,
-				userLongitude: userLng 
-			}
+	//Gets directions from Goole Maps API WS
+	//Used as a callback to getData so it checks for an error first
+	function getDirections(data) {
+		if (data) {
+			console.log(data) ;
+		} else {
+			var dirsDiv = $(document.getElementById('get-dirs-directions')) ;
+			dirsDiv.append("Sorry couldn't get directions: "+err.message) ;
+			return false;
 		}
-		addSimpleMap(locationsObject) ;
-	}) ;
-} else {
-	console.log("No geolocation") ;
-	addSimpleMap(null) ;
-}
-		
+
+	}
+	//Draws directions polylines onto the map and adds directions to directions block
+	//Used as a callback to getData so it checks for an error first
+	function drawDirections(data) {
+		if (err) {
+			console.log("Sorry couldn't get those directions: "+err.message) ;
+			var dirsDiv = $(document.getElementById('get-dirs-directions')) ;
+			dirsDiv.append("Sorry couldn't get those directions: "+err.message) ;
+			return false;
+		} else {
+			console.log(data) ;
+		}
+	}//drawDirections()
+
+	//Gets the user's geolocation info. The callback does something with the geolocaiton info
+	function getUserGeoLoc(cb) {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(pos) {
+				var userLat = pos.coords.latitude;
+				var userLng = pos.coords.longitude;
+				var usersLocationObject = {
+					userLatLng: {
+						userLatitude: userLat,
+						userLongitude: userLng 
+					}
+				}
+				cb(usersLocationObject) ;
+			}) ;
+		} else {
+			console.log("No geolocation") ;
+			cb(null) ;
+		}	
+	}//getUserGeoLoc()
+
+
+
+	//Kick off Maps
+	getUserGeoLoc(addSimpleMap);
 
 	

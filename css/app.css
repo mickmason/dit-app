@@ -1,5 +1,10 @@
-#map { min-height: 400px; max-width: 767px; margin: 20px 0; }
-#get-dirs {clear: both;}
+.container { padding: 25px 15px}
+.container .container { padding-left: 0; padding-right: 0; }
+#map-wrap { min-height: 400px; margin: 20px 0 0;}
+#get-dirs {clear: both; padding: 0 15px;}
 #get-dirs:after {clear: both; content: ""} 
 #get-dirs-start { float: left}
 #get-dirs-end { float: right}
+#get-dirs-go { clear: both;}
+#get-dirs-go #get-dirs-go-btn { float: left;}
+.get-dirs-directions { display: none; }
