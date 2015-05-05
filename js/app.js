@@ -221,11 +221,51 @@
 			//Draws directions polylines onto the map and adds directions to directions block
 			//It is called after click on the directions Go button
 			function drawDirections(data, status) {
-				data = JSON.parse(data) ;
 				console.log(data) ;
-				console.log(data.routes.length) ;
+				data = JSON.parse(data) ;
 
-				// 6th May do -- directionsMap.setBounds(new google.maps.LatLngBounds());
+
+				//Set the bounds of the map to fit the directions
+				//Get the bounds from the returned data
+				//Set SW/NE lat, lng
+				var dirsBounds = new google.maps.LatLngBounds(
+      				new google.maps.LatLng(parseFloat(data.routes[0].bounds.southwest.lat), parseFloat(data.routes[0].bounds.southwest.lng)),
+      				new google.maps.LatLng(parseFloat(data.routes[0].bounds.northeast.lat), parseFloat(data.routes[0].bounds.northeast.lng))
+      			);
+				//Set them
+				directionsMap.fitBounds(dirsBounds) ;
+				console.log(data.routes[0].legs.length) ;
+				console.log(data.routes[0].legs[0].steps.length) ;
+				var polylinesCoords = [] ;
+				var countLines = 0;
+
+				for (var i=0 in data.routes) {
+					
+					for (var j in data.routes[i].legs) {
+						
+						for (var k in data.routes[i].legs[j].steps) {
+							polylinesCoords.push(new google.maps.LatLng(data.routes[i].legs[j].steps[k].start_location.lat, data.routes[i].legs[j].steps[k].start_location.lng));
+							countLines++ ;
+						}
+					}
+				}
+				for (var i in polylinesCoords) {
+					console.log(polylinesCoords.toString()) ;
+				}
+				//console.log(polylinesCoords.length) ;
+
+				var directionsPath = new google.maps.Polyline({
+					path: polylinesCoords,
+					geodesic: true,
+					strokeColor: '#FF0000',
+					strokeOpacity: 1.0,
+					strokeWeight: 2,
+					map: directionsMap
+				});
+
+				//Get the sequence of coordinates for each segment.
+				//
+
 			}//drawDirections()
 
 			//Click on the "Go" Button to get directions
@@ -264,6 +304,7 @@
 	        	} else if (destination === "kevins-st") { 
 	        		destination = kevinsLatLngStr ;
 	        	}
+	        	
 	        	getAJAXData("data_endpoint/json-data-google-directions.php?origin="+encodeURI(origin)+"&dest="+encodeURI(destination), drawDirections) ;
 	        });
 		}
@@ -291,6 +332,15 @@
 			cb(null) ;
 		}	
 	}//getUserGeoLoc()
+
+	//Uses HTML5 orientation to change the compass bearing
+	function deviceOrientationListener(e) {
+			console.log(e.alpha) ;
+			document.getElementById('compass-due-north').style.transform = "rotate(-"+e.alpha+"deg)";
+	}
+	if (window.DeviceOrientationEvent) {
+		window.addEventListener("deviceorientation", deviceOrientationListener);
+	}
 
 	//Kick off Maps
 	getUserGeoLoc(addSimpleMap);

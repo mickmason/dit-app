@@ -8,3 +8,16 @@
 #get-dirs-go { clear: both;}
 #get-dirs-go #get-dirs-go-btn { float: left;}
 .get-dirs-directions { display: none; }
+#compass { clear: both; height: 220px; width: 100%; text-align: center;}
+#compass h3 { text-align: center; position: relative; }
+#compass-due-north {
+		width: 200px; height: 200px; top: 0;
+		position: relative; z-index: 10;
+		margin: 0 auto;
+		transform: rotate(315deg);
+}
+#compass-container { 
+	position: relative; top: -200px; z-index: 20;
+	width: 150px; height: 150px; background: url(../img/arrow621.svg) no-repeat center center; margin: 0 auto; 
+	/*transform: rotate(75deg);*/
+}
