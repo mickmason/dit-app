@@ -21,14 +21,17 @@
 		console.log("getAJAXData") ;
 		$.ajax(url, {
 		  success: success
-		})
+		});
 	}
 	var getData = function(path, cb) {
+		console.log(path) ;
 		$.getJSON(path, function (data) {	
+
 			if (data) {
-				return cb(null, data);	
+				
+				return cb(data);	
 			} else {
-				return cb("Sorry no data", null);
+				return cb("Sorry no data");
 			}
 			
 		}) ;		
@@ -48,11 +51,8 @@
 		return tab;
 	}//makeTable
 
-	var showModulesData = function(err, data) {
-		if (err) {
-			$('#home').append(err) ;
-			return;
-		}
+	var showModulesData = function(data) {
+
 		$('#home').append(makeTable()) ;
 		
 		headTr =  $('<tr></tr>') ;
@@ -83,11 +83,8 @@
 			$('#home tbody').append(tr) ;
 		}		
 	}//showModulesData()
-	var showStudentData = function(err, data) {
-		if (err) {
-			$('#students').append(err) ;
-			return;
-		}
+	var showStudentData = function(data) {
+
 		$('#students').append(makeTable()) ;
 		
 		headTr =  $('<tr></tr>') ;
@@ -117,12 +114,8 @@
 		}		
 	}//showStudentsData()
 
-	var showLecturerData = function(err, data) {
+	var showLecturerData = function(data) {
 
-		if (err) {
-			$('#lecturers').append(err) ;
-			return;
-		}
 
 		$('#lecturers').append(makeTable())  ;
 		
@@ -164,54 +157,117 @@
 	** Google Maps API
 	**
 	***/
+
 	//Map init centered on Aungier St campus long: 53.338545 lat: -6.26607
 	//Simple Map: 53.338661,-6.267645,15
-	var directionsMap = new google.maps.Map(document.getElementById('map-wrap'));
-	var ditLatLngs = {
-		aungierLatLng: 	new google.maps.LatLng(53.338545, -6.26607),
-		kevinsStLatLng: new google.maps.LatLng(53.337015, -6.267933),
-		boltonStLatLng: new google.maps.LatLng(53.351406, -6.268724)
-	}
+	
 	var usersLocationObject = null ;
+	//Creates a Google Map
 	function addSimpleMap(locationsObject) {
-		console.log("addSimpleMap") ;
 		var initMaps = function() {
+			//Create a new Map object
+			var directionsMap = new google.maps.Map(document.getElementById('map-wrap'));
+			//Campuses LatLngs
+			var aungierLatLngStr = "53.338545,-6.26607";
+			var kevinsLatLngStr = "53.337015,-6.267933" ;
+			var boltonLatLngStr = "53.351406,-6.268724"
+			
+			
+			
+			var aungierLatLng =	new google.maps.LatLng( 53.338545, -6.26607);
+			var kevinsStLatLng = new google.maps.LatLng(53.337015,-6.267933);
+			var boltonStLatLng = new google.maps.LatLng(53.351406,-6.268724);
+			var userLatLngStr = "" ;
+			var userLatLng = null ;
+			//Center the Map on Aungier St - may change. Zoom 12
 			var mapOptions = {
-	          center: new google.maps.LatLng(53.338545, -6.26607),
+	          center: aungierLatLng,
 	          zoom: 12
 	        };
+	        //Set the options
 	       	directionsMap.setOptions(mapOptions);
 	        
+	        //Set some markers
+	        //If the user's coordinates have been retrieved do
 	        if (locationsObject.userLatLng) {
 	        	var userMarker = new google.maps.Marker(); 
-	        	var userLoc = new google.maps.LatLng(locationsObject.userLatLng.userLatitude, locationsObject.userLatLng.userLongitude);
+	        	var userLatLngStr = locationsObject.userLatLng.userLatitude+","+locationsObject.userLatLng.userLongitude;
+	        	var userLatLng = new google.maps.LatLng(locationsObject.userLatLng.userLatitude, locationsObject.userLatLng.userLongitude);
 	        	userMarker.setOptions({
-	        		position: userLoc,
+	        		position: userLatLng,
 	        		map: directionsMap,
 	        		title: "You"
 	        	}); 
-	        	directionsMap.setCenter(userLoc) ;
+	        	//Change the center of the Map to the user's locations
+	        	directionsMap.setCenter(userLatLng) ;
 	        }
+	        //Set a marker for each campus
 	        aungierMarker = new google.maps.Marker({
-	        	position: ditLatLngs.aungierLatLng,
+	        	position: aungierLatLng,
 	        	map: directionsMap,
 	        	title: "Aungier Street"
 	        }) ;
 	        kevinsMarker = new google.maps.Marker({
-	        	position: ditLatLngs.kevinsStLatLng,
+	        	position: kevinsStLatLng,
 	        	map: directionsMap,
 	        	title: "Kevins Street"
 	        }) ;
 	        boltonStMarker = new google.maps.Marker({
-	        	position: ditLatLngs.boltonStLatLng,
+	        	position: boltonStLatLng,
 	        	map: directionsMap,
 	        	title: "Bolton Street"
 	        }) ;
+
+			//Draws directions polylines onto the map and adds directions to directions block
+			//It is called after click on the directions Go button
+			function drawDirections(data, status) {
+				data = JSON.parse(data) ;
+				console.log(data) ;
+				console.log(data.routes.length) ;
+
+				//directionsMap.setBounds(new google.maps.LatLngBounds());
+			}//drawDirections()
+
+
+			//Click on the "Go" Button to get directions
 	        $(document.getElementById('get-dirs-go-btn')).on('click', function(e) {
+	        	
 	        	e.preventDefault();
-	        	var url = encodeURI("https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&key=AIzaSyBmggP__Ppp-gh_GRKl_ob8Y6ZT-K6nZIQ");
-	        	console.log(url);
-	        	getAJAXData(url, drawDirections, true) ;
+	        	var origin = $('#get-dirs-start-sel').val();
+	        	var destination = $('#get-dirs-end-sel').val() ;
+	        	var $textDirections = $('.get-dirs-directions') ;
+	        	if (origin === destination) {
+	        		
+	        			$textDirections.text("");
+	        			$textDirections.append("Start and end points are the same. Try again") ;
+		        			$('.get-dirs-directions').slideDown('400', 'swing', function() {
+		        			$(this).addClass('visible') ;
+	        			}) ;
+					return;	        		
+	        		
+	        	}
+
+	        	if (origin === "where-i-am" ) { 
+	        		origin = userLatLngStr ;
+	        	} else if (origin === "aungier-st") { 
+	        		origin = aungierLatLngStr ;
+	        	} else if (origin === "bolton-st") { 
+	        		origin = boltonLatLngStr ;
+	        	}	
+	        	else if (origin === "kevins-st") { 
+	        		origin = kevinsLatLngStr ;
+	        	}
+	        	if (destination === "where-i-am" ) { 
+	        		destination = userLatLngStr ;
+	        	} else if (destination === "aungier-st") { 
+	        		destination = aungierLatLngStr ;
+	        	} else if (destination === "bolton-st") { 
+	        		destination = boltonLatLngStr ;
+	        	} else if (destination === "kevins-st") { 
+	        		destination = kevinsLatLngStr ;
+	        	}
+	        	getData("data_endpoint/json-data-google-directions.php?origin="+encodeURI(origin)+"&dest="+encodeURI(destination), drawDirections) ;
+	        	getAJAXData("data_endpoint/json-data-google-directions.php?origin="+encodeURI(origin)+"&dest="+encodeURI(destination), drawDirections) ;
 	        });
 		}
 		initMaps();
@@ -219,6 +275,7 @@
 	//Gets directions from Goole Maps API WS
 	//Used as a callback to getData so it checks for an error first
 	function getDirections(data) {
+
 		if (data) {
 			console.log(data) ;
 		} else {
@@ -228,18 +285,7 @@
 		}
 
 	}
-	//Draws directions polylines onto the map and adds directions to directions block
-	//Used as a callback to getData so it checks for an error first
-	function drawDirections(data) {
-		if (err) {
-			console.log("Sorry couldn't get those directions: "+err.message) ;
-			var dirsDiv = $(document.getElementById('get-dirs-directions')) ;
-			dirsDiv.append("Sorry couldn't get those directions: "+err.message) ;
-			return false;
-		} else {
-			console.log(data) ;
-		}
-	}//drawDirections()
+	
 
 	//Gets the user's geolocation info. The callback does something with the geolocaiton info
 	function getUserGeoLoc(cb) {
