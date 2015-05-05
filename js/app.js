@@ -154,7 +154,7 @@
 	getData('data_endpoint/json-data-modules.php',showModulesData) ;
 
 	/***
-	** Google Maps API
+	** Google Maps API and webservice
 	**
 	***/
 
@@ -167,16 +167,16 @@
 		var initMaps = function() {
 			//Create a new Map object
 			var directionsMap = new google.maps.Map(document.getElementById('map-wrap'));
-			//Campuses LatLngs
+			//Campuses LatLngs - used in the query to the Maps API as origin and destination coords
 			var aungierLatLngStr = "53.338545,-6.26607";
 			var kevinsLatLngStr = "53.337015,-6.267933" ;
 			var boltonLatLngStr = "53.351406,-6.268724"
-			
-			
-			
+
+			//For map markers
 			var aungierLatLng =	new google.maps.LatLng( 53.338545, -6.26607);
 			var kevinsStLatLng = new google.maps.LatLng(53.337015,-6.267933);
 			var boltonStLatLng = new google.maps.LatLng(53.351406,-6.268724);
+			//TBC
 			var userLatLngStr = "" ;
 			var userLatLng = null ;
 			//Center the Map on Aungier St - may change. Zoom 12
@@ -225,13 +225,11 @@
 				console.log(data) ;
 				console.log(data.routes.length) ;
 
-				//directionsMap.setBounds(new google.maps.LatLngBounds());
+				// 6th May do -- directionsMap.setBounds(new google.maps.LatLngBounds());
 			}//drawDirections()
 
-
 			//Click on the "Go" Button to get directions
-	        $(document.getElementById('get-dirs-go-btn')).on('click', function(e) {
-	        	
+	        $(document.getElementById('get-dirs-go-btn')).on('click', function(e) {	        	
 	        	e.preventDefault();
 	        	var origin = $('#get-dirs-start-sel').val();
 	        	var destination = $('#get-dirs-end-sel').val() ;
@@ -266,25 +264,12 @@
 	        	} else if (destination === "kevins-st") { 
 	        		destination = kevinsLatLngStr ;
 	        	}
-	        	getData("data_endpoint/json-data-google-directions.php?origin="+encodeURI(origin)+"&dest="+encodeURI(destination), drawDirections) ;
 	        	getAJAXData("data_endpoint/json-data-google-directions.php?origin="+encodeURI(origin)+"&dest="+encodeURI(destination), drawDirections) ;
 	        });
 		}
 		initMaps();
 	}//addSimpleMap
-	//Gets directions from Goole Maps API WS
-	//Used as a callback to getData so it checks for an error first
-	function getDirections(data) {
 
-		if (data) {
-			console.log(data) ;
-		} else {
-			var dirsDiv = $(document.getElementById('get-dirs-directions')) ;
-			dirsDiv.append("Sorry couldn't get directions: "+err.message) ;
-			return false;
-		}
-
-	}
 	
 
 	//Gets the user's geolocation info. The callback does something with the geolocaiton info
@@ -307,9 +292,5 @@
 		}	
 	}//getUserGeoLoc()
 
-
-
 	//Kick off Maps
 	getUserGeoLoc(addSimpleMap);
-
-	
