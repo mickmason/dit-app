@@ -20,14 +20,20 @@
 
 
 </section>
-<section class="container" id="students">
-	<h1>Student data</h1>
-
+<section class="container student" id="student">
+	
+	<section class="student-modules">
+		<h1>My modules</h1>
+	</section>
 
 </section>
 
-<section class="container" id="lecturers">
+<section class="container lecturer" id="lecturer">
 	<h1>Lecturers</h1>
+	<section class="lecturer-modules">
+		<h1>My modules</h1>
+	</section>	
+
 
 
 </section>
@@ -37,43 +43,48 @@
 	<section id="map-wrap">
 		
 	</section>
-</section>
-<section class="container get-dirs-directions" >
+	<section class="container get-dirs-directions" >
 	
-</section>
-<section class="container" id="get-dirs">
-	<section id="get-dirs-start">
-		<h2 id="get-dirs-start-head">Start point:</h2>
-		<select id="get-dirs-start-sel">
-			<option selected="selected" value="where-i-am">Where I am now</option>
-			<option value="aungier-st">Aungier Street</option>
-			<option value="kevins-st">Kevins Street</option>
-			<option value="bolton-st">Bolton Street</option>
-		</select>
-		
 	</section>
-	<section  id="get-dirs-end">
-		<h2 id="get-dirs-end-head">Destination:</h2>
-		<select id="get-dirs-end-sel">
-			<option selected="selected" value="aungier-st">Aungier Street</option>
-			<option value="kevins-st">Kevins Street</option>
-			<option value="bolton-st">Bolton Street</option>
-		</select>
-		
-	</section>
-	<section class="container" id="get-dirs-go">
-		<button id="get-dirs-go-btn">Go</button>
-	</section>
-	<section id="compass">
-		<section id="compass-due-north"><h3>N</h3></section>
-		
-		<div id="compass-container">
+	<section class="container" id="get-dirs">
+		<section id="get-dirs-start">
+			<h2 id="get-dirs-start-head">Start point:</h2>
+			<select id="get-dirs-start-sel">
+				<option selected="selected" value="where-i-am">Where I am now</option>
+				<option value="aungier-st">Aungier Street</option>
+				<option value="kevins-st">Kevins Street</option>
+				<option value="bolton-st">Bolton Street</option>
+			</select>
 			
+		</section>
+		<section  id="get-dirs-end">
+			<h2 id="get-dirs-end-head">Destination:</h2>
+			<select id="get-dirs-end-sel">
+				<option selected="selected" value="aungier-st">Aungier Street</option>
+				<option value="kevins-st">Kevins Street</option>
+				<option value="bolton-st">Bolton Street</option>
+			</select>
+			
+		</section>
+		<section class="container" id="get-dirs-go">
+			<button id="get-dirs-go-btn">Go</button>
+		</section>
+		<section id="compass">
+			<section id="compass-due-north">
+			<span id="rot">rot </span>
+			<h3>N</h3>
 
-		</div>
-		<div>Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
-	</section>
-</section>
+			</section>
+			
+			<div id="compass-container">
+				
+
+			</div>
+			<div>Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+		</section><!-- #compass -->
+	</section><!-- #get-dirs -->
+</section><!-- #map page -->
+
 
 <style type="text/css">
 	#user-modal { position: absolute; z-index: 10; top: 10%; left: 10%; background-color: #fff; min-width: 450px; padding: 25px; display: none; }

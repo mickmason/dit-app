@@ -41,7 +41,9 @@
 			$('#user-modal').css('display', 'block') ;
 		}
 	}
+	//Check the user type
 	checkUser();
+	
 	//Makes a HTML table
 	function makeTable() {
 		thead = $('<thead></thead>') ;
@@ -85,7 +87,7 @@
 	}//showModulesData()
 	var showStudentData = function(data) {
 
-		$('#students').append(makeTable()) ;
+		$('.student student-modules').append(makeTable()) ;
 		
 		headTr =  $('<tr></tr>') ;
 		headTr.append($('<td></td>').text('Student ID'));
@@ -117,7 +119,7 @@
 	var showLecturerData = function(data) {
 
 
-		$('#lecturers').append(makeTable())  ;
+		$('lecturer lecturer-modules').append(makeTable())  ;
 		
 		headTr =  $('<tr></tr>') ;
 		headTr.append($('<td></td>').text('Staff number'));
@@ -167,6 +169,8 @@
 		var initMaps = function() {
 			//Create a new Map object
 			var directionsMap = new google.maps.Map(document.getElementById('map-wrap'));
+			//Block for textual directions
+			var $textDirections = $('.get-dirs-directions') ;
 			//Campuses LatLngs - used in the query to the Maps API as origin and destination coords
 			var aungierLatLngStr = "53.338545,-6.26607";
 			var kevinsLatLngStr = "53.337015,-6.267933" ;
@@ -220,7 +224,7 @@
 
 			//Draws directions polylines onto the map and adds directions to directions block
 			//It is called after click on the directions Go button
-			function drawDirections(data, status) {
+			function drawDirections(data) {
 				console.log(data) ;
 				data = JSON.parse(data) ;
 
@@ -234,10 +238,11 @@
       			);
 				//Set them
 				directionsMap.fitBounds(dirsBounds) ;
-				console.log(data.routes[0].legs.length) ;
-				console.log(data.routes[0].legs[0].steps.length) ;
+				
+				//Create polylines to add to the map
 				var polylinesCoords = [] ;
-				var countLines = 0;
+				//Get the HTML instructions for each step
+				var htmlInstructions = [] ;
 
 				for (var i=0 in data.routes) {
 					
@@ -245,7 +250,7 @@
 						
 						for (var k in data.routes[i].legs[j].steps) {
 							polylinesCoords.push(new google.maps.LatLng(data.routes[i].legs[j].steps[k].start_location.lat, data.routes[i].legs[j].steps[k].start_location.lng));
-							countLines++ ;
+							htmlInstructions.push(data.routes[i].legs[j].steps[k].html_instructions) ;
 						}
 					}
 				}
@@ -254,6 +259,7 @@
 				}
 				//console.log(polylinesCoords.length) ;
 
+				//Create the polyline based on the array of coordinates gathered 
 				var directionsPath = new google.maps.Polyline({
 					path: polylinesCoords,
 					geodesic: true,
@@ -263,8 +269,12 @@
 					map: directionsMap
 				});
 
-				//Get the sequence of coordinates for each segment.
-				//
+				//Append the html instructions to the text directions block
+				for (var i in htmlInstructions) {
+					$textDirections.append(htmlInstructions[i]) ;
+				}
+				$textDirections.slideDown();
+				
 
 			}//drawDirections()
 
@@ -273,7 +283,7 @@
 	        	e.preventDefault();
 	        	var origin = $('#get-dirs-start-sel').val();
 	        	var destination = $('#get-dirs-end-sel').val() ;
-	        	var $textDirections = $('.get-dirs-directions') ;
+	        	
 	        	if (origin === destination) {
 	        		
 	        			$textDirections.text("");
@@ -336,7 +346,10 @@
 	//Uses HTML5 orientation to change the compass bearing
 	function deviceOrientationListener(e) {
 			console.log(e.alpha) ;
-			document.getElementById('compass-due-north').style.transform = "rotate(-"+e.alpha+"deg)";
+			var rot = 0;
+			rot = e.alpha;
+			document.getElementById('rot').innerHTML = rot;
+			document.getElementById('compass-due-north').style.transform = "rotate("+rot+"deg)";
 	}
 	if (window.DeviceOrientationEvent) {
 		window.addEventListener("deviceorientation", deviceOrientationListener);
