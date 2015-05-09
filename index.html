@@ -2,138 +2,262 @@
 <html>
 <head>
 	<title>DIT GrangeMobile</title>
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- jQueryMobile -->
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
 	<link rel="stylesheet" type="text/css" href="css/app.css">
 </head>
 <body>
-<nav>
-	<ul>
-		<li><a href="#students">Student data</a></li>
-		<li><a href="#modules">Modules data</a></li>
-		<li><a href="#lecturers">Lecturers data</a></li>
-		<li><a href="#map">Map</a></li>
-		<li><a href="#directions">Get directions</a></li>
-	</ul>
-</nav>
-<!-- Login page -->
+<!--** Login page **-->
 <section data-role="page" id="login">
-	<h1>Welcome to DIT GrangeMobile</h1>
-	<p>Login</p>
-	<form id="loginform">
-		<label for="username">Username</label>
-		<input type="text" name="username" id="username" value="">
-		<label for="password">Password</label>
-		<input type="password" name="password" id="password" value="">
-		<input type="submit" value="Login">
-	</form>
+	<!--* Header *-->
+	<div data-role="header">
+		<h3>DIT GrangeMobile App</h3>
 
-
+	</div>
+	<!--* End Header *-->
+	<!--* Main body *-->
+	<div role="main" class="ui-content">
+		<h1>Welcome to DIT GrangeMobile</h1>
+		<p>Login</p>
+		<form id="loginform">
+			<label for="username">Username</label>
+			<input type="text" name="username" id="username" value="">
+			<label for="password">Password</label>
+			<input type="password" name="password" id="password" value="">
+			<input type="submit" value="Login">
+		</form>
+	</div>
+	<!--* End Main body *-->
+	<!--* Footer *-->
+	<div data-role="footer">
+		<p>&nbsp;</p>
+	</div>
+	<!--* End footer *-->
 </section>
-<!-- End Login page -->
-<!-- Homepage -->
+<!--** End Login page **-->
+<!--** Homepage **-->
 <section data-role="page" id="home">
-	<h1>Welcome <span id="user">Username<span></h1>
-	<!-- Modules listing -->
+	<!--* Header *-->
+	<div data-role="header">
+		<h3>DIT GrangeMobile</h3> 
+		<a class="ui-btn ui-btn-inline" id="logout">Logout</a>
+	</div>
+	<!--* End Header *-->
+	<!--* Main body *-->
+	<div role="main" class="ui-content">
+		<h1>Welcome <span id="user">Username<span></h1>
+		<h2>My modules</h2>
+		<!-- Modules listing -->
+		<article class="mod-detail">
+			<h3 class="mod-detail-title">Module 1 title</h3>
+			<p class="mod-detail-duedate">Due: <em>25th May 2015</em></p>
+			<p class="mod-detail-lecturer">Lecturer Name</p>
+			<p class="mod-detail-more-info"><a data-transition="flow" href="#module">More...</a></p>
+		</article>
+		<article class="mod-detail">
+			<h3 class="mod-detail-title">Module 1 title</h3>
+			<p class="mod-detail-duedate">Due: <em>25th May 2015</em></p>
+			<p class="mod-detail-lecturer">Lecturer Name</p>
+			<p class="mod-detail-more-info"><a data-transition="flow" href="#module">More...</a></p>
+		</article>
+	</div>
+	<!--* End Main body *-->
+	<!--* Footer *-->
+	<div data-role="footer">
+		<p>&nbsp;</p>
+	</div>
+	<!--* End footer *-->
+</section>
+<!--** End Homepage **-->
+<!--** Students page - contains a list of students -->
+<section data-role="page" id="students">
+	<!--* Header *-->
+	<div data-role="header">
+		<a class="ui-btn ui-icon-arrow-l ui-btn-icon-left" data-rel="back">Back</a>
+		<h3>DIT GrangeMobile App</h3>
+	</div>
+	<!--* End Header *-->
+	<!--* Main body *-->
+	<div role="main" class="ui-content">
+		<h1>Students on <span id="module-title">Module title</span></h1>
+		<!-- Student info -->
+	</div>
+	<!--* End Main body *-->
+	<!--* Footer *-->
+	<div data-role="footer">
+		<p>&nbsp;</p>
+	</div>
+	<!--* End footer *-->
+</section>
+<!--** End Students page -->
+<!--** Single Student page - contains infomation about a single user **-->
+<section data-role="page" id="single-student">
+	<!--* Header *-->
+	<div data-role="header">
+		<a class="ui-btn ui-icon-arrow-l ui-btn-icon-left" data-rel="back">Back</a>
+		<h3>DIT GrangeMobile App</h3>
+	</div>
+	<!--* End Header *-->
+	<!--* Main body *-->
+	<div role="main" class="ui-content">
+		<h1>Student Name</h1>
+		<!-- Student info -->
+	</div>
+	<!--* End Main body *-->
+	<!--* Footer *-->
+	<div data-role="footer">
+		<p>&nbsp;</p>
+	</div>
+	<!--* End footer *-->
+
 
 </section>
-<!-- End Homepage -->
-<!-- Homepage -->
-<section class="container student" id="student">
-	
-	<section class="student-modules">
-		<h1>My modules</h1>
-	</section>
+<!--** End Single Student page **-->
+<!--** Single module page - contains infomation about a single module **-->
+<section data-role="page" id="module">
+	<!--* Header *-->
+	<div data-role="header">
+		<a class="ui-btn ui-icon-arrow-l ui-btn-icon-left" data-rel="back">Back</a>
+		<h3>DIT GrangeMobile App</h3>
+	</div>
+	<!--* End Header *-->
+	<!--* Main body *-->
+	<div role="main" class="ui-content">
+		<h1>Module Title</h1>
+		<article class="mod-full">
+			<h3 class="mod-title">Module 1 title</h3>
+			<p class="mod-credits">ECT Credits <span id="mod-credits">5</span></p>
+			<p class="mod-duedate">Due: <em>25th May 2015</em></p>
+			<p class="mod-website"><a data-transition="flow" href="#">Module website</a></p>
+			<p class="mod-lecturer"><a data-transition="flow" href="#lecturer">Lecturer Name</a></p>
+			<p class="mod-room">Room <span id="mod-room-no">A1-027</span></p>
+			<p class="mod-get-directions"><a data-transition="flow" href="#map">Get directions</a></p>
+		</article>
+	</div>
+	<!--* End Main body *-->
+	<!--* Footer *-->
+	<div data-role="footer">
+		<p>&nbsp;</p>
+	</div>
+	<!--* End footer *-->
+
 
 </section>
+<!--** End Single Student page **-->
+<!--** Lecturer page - infomation about a lecturer **-->
+<section data-role="page" id="lecturer">
+	<!--* Header *-->
+	<div data-role="header">
+		<a class="ui-btn ui-icon-arrow-l ui-btn-icon-left" data-rel="back">Back</a><h3>DIT GrangeMobile App</h3>
+	</div>
+	<!--* End Header *-->
+	<!--* Main body *-->
+	<div role="main" class="ui-content">
+		<h1>Lecturer name</h1>
+		<!-- Lecturer info -->
 
-<section class="container lecturer" id="lecturer">
-	<h1>Lecturers</h1>
-	<section class="lecturer-modules">
-		<h1>My modules</h1>
-	</section>	
-
-
+	</div>
+	<!--* End Main body *-->
+	<!--* Footer *-->
+	<div data-role="footer">
+		<p>&nbsp;</p>
+	</div>
+	<!--* End footer *-->
 
 </section>
-
-<section class="container" id="map">
-	<h1>Get directions</h1>
-	<section id="map-wrap">
+<!--** End Lecturer page **-->
+<!-- Google maps page **-->
+<section data-role="page" id="map">
+	<!--* Header *-->
+	<div data-role="header"><a class="ui-btn ui-icon-arrow-l ui-btn-icon-left" data-rel="back">Back</a><h3>DIT GrangeMobile App</h3></div>
+	<!--* End Header *-->
+	<!--* Main body *-->
+	<div role="main" class="ui-content">
+		<h1>Get directions</h1>
+		<section id="map-wrap">
+			
+		</section>
 		
-	</section>
-	
-	<section class="container" id="get-dirs">
-		<section id="compass">
-			<section id="compass-due-north">
-			<span id="rot"> </span>
-				<h3>N</h3>
+		<section id="get-dirs">
+			<section id="compass">
+				<section id="compass-due-north">
+				<span id="rot"> </span>
+					<h3>N</h3>
+				</section>
+				<div id="compass-container">
+					
+
+				</div>
+
+			</section><!-- #compass -->
+			<section class=" get-dirs-directions" >
+		
 			</section>
-			<div id="compass-container">
+
+			<section id="get-dirs-start">
+				<h2 id="get-dirs-start-head">Start point:</h2>
+				<select id="get-dirs-start-sel">
+					<option selected="selected" value="here">Where I am now</option>
+					<option value="DITAungierStreet">Aungier Street</option>
+					<option value="DITKevinStreet">Kevins Street</option>
+					<option value="DITBoltonStreet">Bolton Street</option>
+				</select>
+				
+			</section>
+			<section  id="get-dirs-end">
+				<h2 id="get-dirs-end-head">Destination:</h2>
+				<select id="get-dirs-end-sel">
+					<option selected="selected" value="DITAungierStreet">Aungier Street</option>
+					<option value="DITKevinStreet">Kevins Street</option>
+					<option value="DITBoltonStreet">Bolton Street</option>
+				</select>
+			</section>
+			<section id="get-dirs-mode">
+				
 				
 
-			</div>
-			<div>Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
-		</section><!-- #compass -->
-		<section id="get-dirs-start">
-			<h2 id="get-dirs-start-head">Start point:</h2>
-			<select id="get-dirs-start-sel">
-				<option selected="selected" value="here">Where I am now</option>
-				<option value="DITAungierStreet">Aungier Street</option>
-				<option value="DITKevinStreet">Kevins Street</option>
-				<option value="DITBoltonStreet">Bolton Street</option>
-			</select>
+				<p>Travel mode:</p>
+					<label for="transit">
+					Transit:
+					<input type="radio" name="travel-mode" value="transit" />
+					</label>
+					<label for="driving">
+						Driving:
+						<input type="radio" name="travel-mode" value="driving" />
+					</label>
+					<label for="walking">
+						Walking:
+						<input type="radio" name="travel-mode" value="walking" />
+					</label>
+					<label for="bicycling">
+						Cycling:
+						<input type="radio" name="travel-mode" value="bicycling" />
+					</label>
+				
+			</section>
+			<section  id="get-dirs-go">
+				<button id="get-dirs-go-btn">Go</button>
+			</section>
+			
 			
 		</section>
-		<section  id="get-dirs-end">
-			<h2 id="get-dirs-end-head">Destination:</h2>
-			<select id="get-dirs-end-sel">
-				<option selected="selected" value="DITAungierStreet">Aungier Street</option>
-				<option value="DITKevinStreet">Kevins Street</option>
-				<option value="DITBoltonStreet">Bolton Street</option>
-			</select>
-		</section>
-		<section class="container"  id="get-dirs-mode">
-			
-			
+		<!-- #get-dirs -->
+	</div>
+	<!-- End .ui-content -->
+		<!--* Footer *-->
+	<div data-role="footer">
+		<p>&nbsp;</p>
+	</div>
+	<!--* End footer *-->
 
-			<p>Travel mode:</p>
-				<label for="transit">
-				Transit:
-				<input type="radio" name="travel-mode" value="transit" />
-				</label>
-				<label for="driving">
-					Driving:
-					<input type="radio" name="travel-mode" value="driving" />
-				</label>
-				<label for="walking">
-					Walking:
-					<input type="radio" name="travel-mode" value="walking" />
-				</label>
-				<label for="bicycling">
-					Cycling:
-					<input type="radio" name="travel-mode" value="bicycling" />
-				</label>
-			
-		</section>
-		<section class="container" id="get-dirs-go">
-			<button id="get-dirs-go-btn">Go</button>
-		</section>
-		<section class="container get-dirs-directions" >
-	
-		</section>
-		
-	</section><!-- #get-dirs -->
-</section><!-- #map page -->
-
-
-<style type="text/css">
-	#user-modal { position: absolute; z-index: 10; top: 10%; left: 10%; background-color: #fff; min-width: 450px; padding: 25px; display: none; }
-</style>
-<section id="user-modal">
-	<p>Login as:</p>
-	<button id="lecturer-user">A lecturer</button>	
-	<button id="student-user">A student</button>
 </section>
+<!--** End Google maps page **-->
+
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh_EAaBpkQ_PNLu7AJneiyXt69f9R6Nzk"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="js/app.js">

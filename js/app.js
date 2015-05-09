@@ -42,7 +42,7 @@
 		}
 	}
 	//Check the user type
-	checkUser();
+//	checkUser();
 	
 	//Makes a HTML table
 	function makeTable() {
@@ -148,9 +148,9 @@
 			$('#lecturers tbody').append(tr) ;
 		}		
 	}//showLecturersData()	
-	getData('data_endpoint/json-data-students.php',showStudentData) ;
-	getData('data_endpoint/json-data-lecturers.php',showLecturerData) ;
-	getData('data_endpoint/json-data-modules.php',showModulesData) ;
+	// getData('data_endpoint/json-data-students.php',showStudentData) ;
+	// getData('data_endpoint/json-data-lecturers.php',showLecturerData) ;
+	// getData('data_endpoint/json-data-modules.php',showModulesData) ;
 
 	/***
 	** Google Maps API and webservice

@@ -2,12 +2,10 @@
 .container .container { padding-left: 0; padding-right: 0; }
 #map-wrap { min-height: 400px; margin: 20px 0 0;}
 #get-dirs {clear: both; padding: 0 15px;}
-#get-dirs:after {clear: both; content: ""} 
-#get-dirs-start { float: left}
-#get-dirs-end { float: right}
-#get-dirs-mode {clear: both;}
-#get-dirs-go { clear: both;}
-#get-dirs-go #get-dirs-go-btn { float: left;}
+
+
+
+
 .get-dirs-directions { display: none; }
 #compass { clear: both; height: 220px; width: 100%; text-align: center;}
 #compass h3 { text-align: center; position: relative; }
