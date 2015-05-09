@@ -19,7 +19,8 @@ curl_setopt($cr, CURLOPT_URL, $url);
 if (!curl_exec($cr)) {
     echo curl_error($cr);
 } else {
-    echo curl_exec($cr) ;
+	$decoded = json_decode(curl_exec($cr)) ; 
+    echo var_dump($decoded) ;
 }
 curl_close($cr) ;
 //echo http_get("https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&key=AIzaSyDvChWYNxiSZwwEPquQ0xJRCFjoSL0dSL8");
