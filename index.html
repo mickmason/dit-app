@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>DIT App</title>
+	<title>DIT GrangeMobile</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/app.css">
 </head>
 <body>
@@ -14,12 +15,29 @@
 		<li><a href="#directions">Get directions</a></li>
 	</ul>
 </nav>
-
-<section class="container" id="home">
-	<h1>Home</h1>
+<!-- Login page -->
+<section data-role="page" id="login">
+	<h1>Welcome to DIT GrangeMobile</h1>
+	<p>Login</p>
+	<form id="loginform">
+		<label for="username">Username</label>
+		<input type="text" name="username" id="username" value="">
+		<label for="password">Password</label>
+		<input type="password" name="password" id="password" value="">
+		<input type="submit" value="Login">
+	</form>
 
 
 </section>
+<!-- End Login page -->
+<!-- Homepage -->
+<section data-role="page" id="home">
+	<h1>Welcome <span id="user">Username<span></h1>
+	<!-- Modules listing -->
+
+</section>
+<!-- End Homepage -->
+<!-- Homepage -->
 <section class="container student" id="student">
 	
 	<section class="student-modules">

@@ -117,10 +117,7 @@
 	}//showStudentsData()
 
 	var showLecturerData = function(data) {
-
-
 		$('lecturer lecturer-modules').append(makeTable())  ;
-		
 		headTr =  $('<tr></tr>') ;
 		headTr.append($('<td></td>').text('Staff number'));
 		headTr.append($('<td></td>').text('First Name'));
@@ -159,17 +156,13 @@
 	** Google Maps API and webservice
 	**
 	***/
-
-	//Map init centered on Aungier St campus long: 53.338545 lat: -6.26607
-	//Simple Map: 53.338661,-6.267645,15
-	
 	var usersLocationObject = null ;
 	//Creates a Google Map
 	function addSimpleMap(locationsObject) {
 		//Initalize the Map. This adds a draw directions function and sets event handlers which call the draw directions function 
 		var initMaps = function() {
 			//Flag - if the map has a directions polyline
-			var hasDriections = false;
+			var hasDirections = false;
 			//Create a new Map object
 			var directionsMap = new google.maps.Map(document.getElementById('map-wrap'));
 			//THis will be a Google maps Polyline to draw directions
@@ -295,14 +288,14 @@
 									map: directionsMap
 								});
 					//Flag that the map has directions added - tested when th user location pin is dragged
-					hasDriections = true;
+					hasDirections = true;
 
 				//Map results not returned
 				} else {
 					//No results
 					htmlInstructions[0] = "Sorry no results for that journey" ;
 					//No directions drawn
-					hasDriections = false;
+					hasDirections = false;
 				}
 				//Append the html instructions to the text directions block
 				//Clear the block
@@ -366,7 +359,7 @@
 	        });
 
 			 google.maps.event.addListener(userMarker, 'dragend', function() {
-			 	if (hasDriections) {
+			 	if (hasDirections) {
 			 		var uLatLng = userMarker.getPosition() ;
 	        		var userLat = uLatLng.lat().toString();
 	        		var userLng = uLatLng.lng().toString();
