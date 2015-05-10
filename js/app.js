@@ -68,18 +68,10 @@ var paras = [] ;
 		console.log(id) ;
 		getData('data_endpoint/json-data-single-module.php?moduleid='+id, showOneModule) ;
 	}) ;
-	/** Gets a list of Modules */
-	var showMyModules = function(data) {
-		console.log(data)	;
-		
-		var list = []
-	
-		for (var i=0; i<data.modules.length; i++) {
-			var link =$('<a></a>').attr({'href': "#module?"+data.modules[i].moduleNo, 'data-modid': data.modules[i].moduleNo}).addClass('module-link');
-
-
-			
-			var modTitle = data.modules[i].moduleName;
+	//Utility function that makes a list of modules. takes a module and returns a <article> element containing the name, a link to the module full page.
+	var makeModules = function(mod) {
+			var link =$('<a></a>').attr({'href': "#module?"+mod.moduleNo, 'data-modid': mod.moduleNo}).addClass('module-link');
+			var modTitle = mod.moduleName;
 			var angleRight = $('<i></i>').addClass('fa fa-angle-right');
 			var para = $('<p></p>');
 
@@ -87,15 +79,50 @@ var paras = [] ;
 			link.append(para) ;
 			var listItem = $('<article></article>').addClass('list-item') ;
 			listItem.append(link) ;
-			list.push(listItem) ;
-		}		
+			return listItem;
+	}
+	/** Show a list a list of Modules, append them to the #browsemodules page */
+	var showMyModules = function(data) {
+		console.log(data)	;
+		
+		var list = []
+	
+		for (var i=0; i<data.modules.length; i++) {
+			
+			list.push(makeModules(data.modules[i])) ;
+		}	
+
 		$('#mymodules .ui-content').text('') ;
 		for (var i = 0; i<list.length; i++) {
 			$('#mymodules .ui-content').append(list[i]);
 		}
 	}//showMyModulesData()
+
+	/** Show a list all of Modules, append them to the #mymodules page */
+	var showAllModules = function(data) {
+		console.log(data)	;
+		
+		var list = []
+	
+		for (var i=0; i<data.modules.length; i++) {
+		
+			list.push(makeModules(data.modules[i])) ;
+		}
+		console.log(list.length) 		
+
+		$('#browsemodules .ui-content').text('') ;
+		for (var i = 0; i<list.length; i++) {
+			$('#browsemodules .ui-content').append(list[i]);
+		}
+
+	}//showAllModules()
 	$('#home #getmymodules').on('click', function(e) {
+		console.log(click)
 		getData('data_endpoint/json-data-student-modules.php?studentid='+userID, showMyModules) ;
+	});
+	//Get my modules
+	$('#home #getallmodules').on('click', function(e) {
+		getData('data_endpoint/json-data-modules.php', showAllModules) ;
 	});
 
 
@@ -413,7 +440,6 @@ var paras = [] ;
 	function deviceOrientationListener(e) {
 			var rot = 0;
 			rot = e.alpha;
-			document.getElementById('rot').innerHTML = rot;
 			document.getElementById('compass-due-north').style.transform = "rotate("+rot+"deg)";
 	}
 	if (window.DeviceOrientationEvent) {
