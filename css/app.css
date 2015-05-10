@@ -1,7 +1,182 @@
-.container { padding: 25px 15px}
-.container .container { padding-left: 0; padding-right: 0; }
-#map-wrap { min-height: 400px; margin: 20px 0 0;}
-#get-dirs {clear: both; padding: 0 15px;}
+/* Typography */
+html {font-size: 1em;}
+* { text-shadow: none !important; }
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+body {
+  background-color: white;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #333;
+}
+input, select, textarea, button, .ui-btn { font-family: "Roboto", sans-serif; }
+p { font-size: 0.875rem; line-height: 1.250; /* 14/20*/}
+
+h1, h2, h3, h4 {
+/*  margin: 1.414em 0 0.5em;*/
+  font-weight: inherit;
+  /*line-height: 1.2;*/
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.500em;
+  line-height: 1.33333;
+}
+
+h2 {font-size: 1rem; line-height: 1.5; /* 16/24 */}
+
+h3 {font-size: 0.875rem; line-height: 1.750; font-weight: bold; /* 16/28 */}
+
+h4 {font-size: 1.25em;}
+
+small, .font_small {font-size: 0.8em;}
+
+.ui-page-theme-a a, html .ui-bar-a a, html .ui-body-a a, html body .ui-group-theme-a a { color:  #0060aa ; text-decoration: none }
+.ui-page-theme-a a:hover, html .ui-bar-a a:hover, html .ui-body-a a:hover, html body .ui-group-theme-a a:hover { color: #0060aa; text-decoration: underline }
+.ui-page-theme-a a:visited, html .ui-bar-a a:visited, html .ui-body-a a:visited, html body .ui-group-theme-a a:visited { color: #0196d8; }
+
+.ui-header {
+	-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.28);
+-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.28);
+box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.28); 
+padding: 0 16px ; background-color: #0060aa !important; 
+		border: none !important;
+		height: 56px;
+
+
+}
+.ui-header .dit-logo { float: right; }
+/* header button overrides */
+.ui-header .ui-btn-left, .ui-header .ui-btn-right, .ui-btn-left>[class*=ui-], .ui-btn-right>[class*=ui-] { 
+		background: transparent; border-radius: 0px; -webkit-border-radius: 0px;
+		border: none;
+		color: #fff;
+		font-weight: 400; font-size: 16px;
+		position: relative;
+		box-shadow: none;
+		padding: 0;
+		top: 0;
+		left: 0;
+		right: 0;
+}
+.ui-header .ui-btn { background-color: transparent !important; margin-bottom: 0px !important; display: block }
+.ui-header .ui-btn-right { float: right;}
+.ui-header .ui-btn-left { float: left; }
+.ui-header-fixed.ui-fixed-hidden .ui-btn-left .inner-header-back-link,  .ui-header .inner-header-back-link { width: 16px; padding: 12px 12px; padding-left: 0; margin-top: 6px; }
+.ui-header .ui-btn.home-logo-link { }
+.ui-header:after {
+	clear: both;
+	content: "";
+	display: table;
+}
+.ui-header img { float: left; display: block; margin: auto;  }
+.ui-header .ui-title { 
+		color: #fff;
+		font-weight: 500;
+		font-size: 1.250rem ;
+		margin: 0; padding: 0;
+		margin-left: 2px ;
+		margin-top: 12px ;
+		text-align: left;
+		float: left;
+}
+.ui-header.inner-header .ui-title { margin-left: 28px; }
+.ui-footer {
+	
+	min-height: 48px ; padding: 0px 0; 
+	background-color: #FDDA24 !important;
+	border-top: 1px solid #D7B503 !important;
+}
+.ui-footer .ui-btn { top: 0px; right: 0; margin-top: 6px; margin-bottom: 6px; margin-right: 16px; background-color: transparent !important; color: inherit !important; border: none;}
+.ui-footer .ui-btn:hover, .ui-footer .ui-btn:focus { background-color: #D7B503 !important; }  
+.ui-footer .ui-btn:active { background-color: #A98E00 !important; }  
+.ui-btn {
+		text-shadow: none !important;
+		text-transform: uppercase;
+		font-weight: 500;
+
+}
+
+#login form {
+		margin-top: 20px;
+}
+.ui-body-a, .ui-page-theme-a .ui-body-inherit, html .ui-bar-a .ui-body-inherit, html .ui-body-a .ui-body-inherit, html body .ui-group-theme-a .ui-body-inherit, html .ui-panel-page-container-a {
+		box-shadow: none;
+		border: none;
+		border-radius: 0px;
+		margin-bottom: 16px;
+}
+
+.ui-input-text input, .ui-input-search input {
+	margin: 0;
+  	min-height: 2.2em;
+  	padding-left: 0; padding-right: 0;
+  	border: 0;
+  	border-bottom: 1px solid #aeaeae;
+  	background: transparent none;
+  	-webkit-appearance: none;
+  	-webkit-border-radius: inherit;
+  	border-radius: 0;
+
+
+
+}
+.ui-mobile label, div.ui-controlgroup-label {
+	font-size: 0.750em;
+	font-weight: 500;
+	color: #676767;
+	margin-top: 36px;
+}
+
+.ui-input-text input:focus, .ui-input-search input:focus {
+		border-color: #0060aa;
+		border-width: 2px;
+		padding-bottom: 5.4px
+}
+
+
+/* Buttons */
+.ui-shadow {
+	webkit-box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.28);
+	-moz-box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.28);
+	box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.28);
+}
+
+.ui-page-theme-a .ui-btn, html .ui-bar-a .ui-btn, html .ui-body-a .ui-btn, html body .ui-group-theme-a .ui-btn, html head+body .ui-btn.ui-btn-a,
+.ui-page-theme-a .ui-btn:visited, html .ui-bar-a .ui-btn:visited, html .ui-body-a .ui-btn:visited, 
+html body .ui-group-theme-a .ui-btn:visited, html head+body .ui-btn.ui-btn-a:visited {
+		border: none;
+		border-radius: 2px;
+		margin-bottom: 16px;
+		background-color: #0196d8;
+		color: #fff;
+		border-color: transparent;
+}
+.ui-page-theme-a .ui-btn:hover, .ui-page-theme-a .ui-btn:focus, html .ui-bar-a .ui-btn:hover, html .ui-bar-a .ui-btn:focus, html .ui-body-a .ui-btn:hover, html .ui-body-a .ui-btn:focus,
+html body .ui-group-theme-a .ui-btn:hover, html body .ui-group-theme-a .ui-btn:focus, html head+body .ui-btn.ui-btn-a:hover, html head+body .ui-btn.ui-btn-a:focus {
+			border: none;
+		border-radius: 2px;
+		margin-bottom: 16px;
+		background-color: #0196d8;
+		color: #fff;
+		box-shadow: none;
+	
+}
+.ui-page-theme-a .ui-btn:active, html .ui-bar-a .ui-btn:active, html .ui-body-a .ui-btn:active, html body .ui-group-theme-a .ui-btn:active, html head+body .ui-btn.ui-btn-a:active {
+			border: none;
+		border-radius: 2px;
+		margin-bottom: 16px;
+		background-color: #0196d8;
+		color: #fff;
+		-webkit-box-shadow: 0px 3px 20px 2px rgba(0,0,0,0.28);
+		-moz-box-shadow: 0px 3px 20px 2px rgba(0,0,0,0.28);
+		box-shadow: 0px 3px 20px 2px rgba(0,0,0,0.28);			
+}
+#map-wrap { height: 400px; margin: 20px 0 0;}
+#get-dirs {clear: both; }
 
 
 
@@ -20,3 +195,4 @@
 	width: 150px; height: 150px; background: url(../img/arrow621.svg) no-repeat center center; margin: 0 auto; 
 	/*transform: rotate(75deg);*/
 }
+

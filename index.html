@@ -8,33 +8,35 @@
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
+	<!-- Roboto font from Google Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+	<!-- fontawesome icons -->
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<!-- Custom styles -->
 	<link rel="stylesheet" type="text/css" href="css/app.css">
 </head>
 <body>
 <!--** Login page **-->
 <section data-role="page" id="login">
 	<!--* Header *-->
-	<div data-role="header">
-		<h3>DIT GrangeMobile App</h3>
-
+	<div data-role="header" data-position="fixed">
+		<img src="img/dit_logocol_reverse.png" width="55" alt="DIT logo"><h3>Login</h3> 
 	</div>
 	<!--* End Header *-->
 	<!--* Main body *-->
 	<div role="main" class="ui-content">
 		<h1>Welcome to DIT GrangeMobile</h1>
-		<p>Login</p>
-		<form id="loginform">
-			<label for="username">Username</label>
+		<form class="material-form" id="loginform">
+			<label for="username">Username:</label>
 			<input type="text" name="username" id="username" value="">
-			<label for="password">Password</label>
+			<label for="password">Password:</label>
 			<input type="password" name="password" id="password" value="">
 			<input type="submit" value="Login">
 		</form>
 	</div>
 	<!--* End Main body *-->
 	<!--* Footer *-->
-	<div data-role="footer">
+	<div data-role="footer" data-position="fixed">
 		<p>&nbsp;</p>
 	</div>
 	<!--* End footer *-->
@@ -43,33 +45,38 @@
 <!--** Homepage **-->
 <section data-role="page" id="home">
 	<!--* Header *-->
-	<div data-role="header">
-		<h3>DIT GrangeMobile</h3> 
-		<a class="ui-btn ui-btn-inline" id="logout">Logout</a>
+	<div data-role="header" data-position="fixed">
+		<h3>DIT GrangeMobile App</h3> 
+		<img src="img/dit_logocol_reverse.png" width="55" class="dit-logo" alt="DIT logo">
 	</div>
 	<!--* End Header *-->
 	<!--* Main body *-->
 	<div role="main" class="ui-content">
-		<h1>Welcome <span id="user">Username<span></h1>
-		<h2>My modules</h2>
+		<h1>Welcome, <span id="user">Username<span></h1>
 		<!-- Modules listing -->
-		<article class="mod-detail">
-			<h3 class="mod-detail-title">Module 1 title</h3>
-			<p class="mod-detail-duedate">Due: <em>25th May 2015</em></p>
-			<p class="mod-detail-lecturer">Lecturer Name</p>
-			<p class="mod-detail-more-info"><a data-transition="flow" href="#module">More...</a></p>
+		<article class="list-item">
+			<p><a href="#mymodule">My Modules<i class="fa fa-angle-right"></i></a></p>
+
 		</article>
-		<article class="mod-detail">
-			<h3 class="mod-detail-title">Module 1 title</h3>
-			<p class="mod-detail-duedate">Due: <em>25th May 2015</em></p>
-			<p class="mod-detail-lecturer">Lecturer Name</p>
-			<p class="mod-detail-more-info"><a data-transition="flow" href="#module">More...</a></p>
+		<article class="list-item">
+			<p><a href="#browsemodules">Browse modules<i class="fa fa-angle-right"></i></a></p>
+
 		</article>
+		<article class="list-item">
+			<p><a href="#lecturers">The academics<i class="fa fa-angle-right"></i></a></p>
+
+		</article>
+		<article class="list-item">
+			<p><a href="#map">Get directions<i class="fa fa-angle-right"></i></a></p>
+
+		</article>
+		
 	</div>
 	<!--* End Main body *-->
 	<!--* Footer *-->
-	<div data-role="footer">
-		<p>&nbsp;</p>
+	<div data-role="footer" data-position="fixed">
+
+		<a class="ui-btn ui-btn-right ui-btn-inline" id="logout">Logout</a>
 	</div>
 	<!--* End footer *-->
 </section>
@@ -77,19 +84,20 @@
 <!--** Students page - contains a list of students -->
 <section data-role="page" id="students">
 	<!--* Header *-->
-	<div data-role="header">
-		<a class="ui-btn ui-icon-arrow-l ui-btn-icon-left" data-rel="back">Back</a>
-		<h3>DIT GrangeMobile App</h3>
+	<div data-role="header" data-position="fixed"  class="inner-header">
+		<a class="inner-header-back-link " data-rel="back"><span class="fa-arrow-left fa"></span></a>
+		<h3>Students</h3>
+		<a href="#home" class="home-logo-link"><img src="img/dit_logocol_reverse.png" class="dit-logo" width="55" alt="DIT logo"></a>
 	</div>
 	<!--* End Header *-->
 	<!--* Main body *-->
 	<div role="main" class="ui-content">
-		<h1>Students on <span id="module-title">Module title</span></h1>
+		<h1>Enrolled students</h1>
 		<!-- Student info -->
 	</div>
 	<!--* End Main body *-->
 	<!--* Footer *-->
-	<div data-role="footer">
+	<div data-role="footer" data-position="fixed">
 		<p>&nbsp;</p>
 	</div>
 	<!--* End footer *-->
@@ -98,9 +106,10 @@
 <!--** Single Student page - contains infomation about a single user **-->
 <section data-role="page" id="single-student">
 	<!--* Header *-->
-	<div data-role="header">
-		<a class="ui-btn ui-icon-arrow-l ui-btn-icon-left" data-rel="back">Back</a>
-		<h3>DIT GrangeMobile App</h3>
+	<div data-role="header" data-position="fixed"  class="inner-header">
+		<a class="inner-header-back-link " data-rel="back"><span class="fa-arrow-left fa"></span></a>
+		<h3>Student name</h3>
+		<a href="#home" class="home-logo-link"><img src="img/dit_logocol_reverse.png" class="dit-logo" width="55" alt="DIT logo"></a>
 	</div>
 	<!--* End Header *-->
 	<!--* Main body *-->
@@ -110,7 +119,7 @@
 	</div>
 	<!--* End Main body *-->
 	<!--* Footer *-->
-	<div data-role="footer">
+	<div data-role="footer" data-position="fixed">
 		<p>&nbsp;</p>
 	</div>
 	<!--* End footer *-->
@@ -118,30 +127,64 @@
 
 </section>
 <!--** End Single Student page **-->
-<!--** Single module page - contains infomation about a single module **-->
-<section data-role="page" id="module">
+
+<!--** Browse module page - Shows a list of all modules **-->
+<section data-role="page" id="browsemodules">
 	<!--* Header *-->
-	<div data-role="header">
-		<a class="ui-btn ui-icon-arrow-l ui-btn-icon-left" data-rel="back">Back</a>
-		<h3>DIT GrangeMobile App</h3>
+	<div data-role="header" data-position="fixed"  class="inner-header">
+		<a class="inner-header-back-link " data-rel="back"><span class="fa-arrow-left fa"></span></a>
+		<h3>Browse modules</h3>
+		<a href="#home" class="home-logo-link"><img src="img/dit_logocol_reverse.png" class="dit-logo" width="55" alt="DIT logo"></a>
 	</div>
 	<!--* End Header *-->
 	<!--* Main body *-->
 	<div role="main" class="ui-content">
-		<h1>Module Title</h1>
-		<article class="mod-full">
-			<h3 class="mod-title">Module 1 title</h3>
-			<p class="mod-credits">ECT Credits <span id="mod-credits">5</span></p>
-			<p class="mod-duedate">Due: <em>25th May 2015</em></p>
-			<p class="mod-website"><a data-transition="flow" href="#">Module website</a></p>
-			<p class="mod-lecturer"><a data-transition="flow" href="#lecturer">Lecturer Name</a></p>
-			<p class="mod-room">Room <span id="mod-room-no">A1-027</span></p>
-			<p class="mod-get-directions"><a data-transition="flow" href="#map">Get directions</a></p>
+		<article class="list-item">
+			<p class=""><a href="#module?1234"><span id="mod-id">1234</span> Module 1 title <i class="fa fa-angle-right"></i></a></p>
+		</article>
+		<article class="list-item">
+			<p class="mod-detail-title"><a href="#module?1235"><span id="mod-id">1235</span> Module 2 title <i class="fa fa-angle-right"></i></a></p>
+		</article>
+		<article class="list-item">
+			<p class=""><a href="#module?1235"><span id="mod-id">1234</span> Module 2 title <i class="fa fa-angle-right"></i></a></p>
 		</article>
 	</div>
 	<!--* End Main body *-->
 	<!--* Footer *-->
-	<div data-role="footer">
+	<div data-role="footer" data-position="fixed">
+		<p>&nbsp;</p>
+	</div>
+	<!--* End footer *-->
+
+
+</section>
+<!--** End Browse modules page **-->
+
+<!--** Single module page - contains infomation about a single module **-->
+<section data-role="page" id="module">
+	<!--* Header *-->
+	<div data-role="header" data-position="fixed"  class="inner-header">
+		<a class="inner-header-back-link " data-rel="back"><span class="fa-arrow-left fa"></span></a>
+		<h3>Module title</h3>
+		<a href="#home" class="home-logo-link"><img src="img/dit_logocol_reverse.png" class="dit-logo" width="55" alt="DIT logo"></a>
+	</div>
+	<!--* End Header *-->
+	<!--* Main body *-->
+	<div role="main" class="ui-content">
+
+		<article class="mod-full">
+			<h3 class="mod-title">Module 1 title</h3>
+			<p class="mod-credits">ECT Credits <span id="mod-credits">5</span></p>
+			<p class="mod-duedate">Due: <em>25th May 2015</em></p>
+			<p class="mod-website"><a href="#">Module website</a></p>
+			<p class="mod-lecturer"><a href="#lecturer">Lecturer Name</a></p>
+			<p class="mod-room">Room <span id="mod-room-no">A1-027</span></p>
+			<p class="mod-get-directions"><a href="#map">Get directions</a></p>
+		</article>
+	</div>
+	<!--* End Main body *-->
+	<!--* Footer *-->
+	<div data-role="footer" data-position="fixed">
 		<p>&nbsp;</p>
 	</div>
 	<!--* End footer *-->
@@ -152,8 +195,10 @@
 <!--** Lecturer page - infomation about a lecturer **-->
 <section data-role="page" id="lecturer">
 	<!--* Header *-->
-	<div data-role="header">
-		<a class="ui-btn ui-icon-arrow-l ui-btn-icon-left" data-rel="back">Back</a><h3>DIT GrangeMobile App</h3>
+	<div data-role="header" data-position="fixed"  class="inner-header">
+		<a class="inner-header-back-link " data-rel="back"><span class="fa-arrow-left fa"></span></a>
+		<h3>Lecturer name</h3>
+		<a href="#home" class="home-logo-link"><img src="img/dit_logocol_reverse.png" class="dit-logo" width="55" alt="DIT logo"></a>
 	</div>
 	<!--* End Header *-->
 	<!--* Main body *-->
@@ -164,7 +209,7 @@
 	</div>
 	<!--* End Main body *-->
 	<!--* Footer *-->
-	<div data-role="footer">
+	<div data-role="footer" data-position="fixed">
 		<p>&nbsp;</p>
 	</div>
 	<!--* End footer *-->
@@ -174,11 +219,15 @@
 <!-- Google maps page **-->
 <section data-role="page" id="map">
 	<!--* Header *-->
-	<div data-role="header"><a class="ui-btn ui-icon-arrow-l ui-btn-icon-left" data-rel="back">Back</a><h3>DIT GrangeMobile App</h3></div>
+	<div data-role="header" data-position="fixed"  class="inner-header">
+		<a class="inner-header-back-link " data-rel="back"><span class="fa-arrow-left fa"></span></a>
+		<h3>Get directions</h3>
+		<a href="#home" class="home-logo-link"><img src="img/dit_logocol_reverse.png" class="dit-logo" width="55" alt="DIT logo"></a>
+	</div>
 	<!--* End Header *-->
 	<!--* Main body *-->
 	<div role="main" class="ui-content">
-		<h1>Get directions</h1>
+
 		<section id="map-wrap">
 			
 		</section>
@@ -250,7 +299,7 @@
 	</div>
 	<!-- End .ui-content -->
 		<!--* Footer *-->
-	<div data-role="footer">
+	<div data-role="footer" data-position="fixed">
 		<p>&nbsp;</p>
 	</div>
 	<!--* End footer *-->
