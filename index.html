@@ -55,20 +55,29 @@
 		<h1>Welcome, <span id="user">Username<span></h1>
 		<!-- Modules listing -->
 		<article class="list-item">
-			<p>My Modules<a href="#mymodule"><i class="fa fa-angle-right"></i></a></p>
+			<a href="#mymodules" id="getmymodules">
+				<p>My modules <i class="fa fa-angle-right"></i></p>
+				<p class="list-item-line-two">View your modules </p>
+			</a>
+		</article>
+		<article class="list-item">
+			<a href="#browsemodules">
+				<p>Browse modules <i class="fa fa-angle-right"></i></p>
+				<p class="list-item-line-two">Browse all modules </p>
+			</a>
+		</article>
+		<article class="list-item">
+			<a href="#lecturers">
+				<p>The academics <i class="fa fa-angle-right"></i></p>
+				<p class="list-item-line-two">View your lecturers </p>
+			</a>
 
 		</article>
 		<article class="list-item">
-			<p>Browse modules<a href="#browsemodules"><i class="fa fa-angle-right"></i></a></p>
-
-		</article>
-		<article class="list-item">
-			<p>The academics<a href="#lecturers"><i class="fa fa-angle-right"></i></a></p>
-
-		</article>
-		<article class="list-item">
-			<p>Get directions<a href="#map"><i class="fa fa-angle-right"></i></a></p>
-
+			<a href="#map">
+				<p>Get directions <i class="fa fa-angle-right"></i></p>
+				<p class="list-item-line-two">Find your way to a lecture </p>
+			</a>
 		</article>
 		
 	</div>
@@ -140,13 +149,52 @@
 	<!--* Main body *-->
 	<div role="main" class="ui-content">
 		<article class="list-item">
-			<p class=""><a href="#module?1234"><span id="mod-id">1234</span> Module 1 title <i class="fa fa-angle-right"></i></a></p>
+			<a href="#module?1234">
+				<p class=""><span id="mod-id">1234</span> Module 1 title <i class="fa fa-angle-right"></i></p>
+			</a>
 		</article>
 		<article class="list-item">
-			<p class="mod-detail-title"><a href="#module?1235"><span id="mod-id">1235</span> Module 2 title <i class="fa fa-angle-right"></i></a></p>
+			<a href="#module?1235">
+				<p class="mod-detail-title"><span id="mod-id">1235</span> Module 2 title <i class="fa fa-angle-right"></i></p>
+			</a>
 		</article>
 		<article class="list-item">
-			<p class=""><a href="#module?1235"><span id="mod-id">1234</span> Module 2 title <i class="fa fa-angle-right"></i></a></p>
+			<a href="#module?1235">
+				<p class=""><span id="mod-id">1234</span> Module 2 title <i class="fa fa-angle-right"></i></p>
+			</a>
+		</article>
+	</div>
+	<!--* End Main body *-->
+	<!--* Footer *-->
+	<div data-role="footer" data-position="fixed">
+		<p>&nbsp;</p>
+	</div>
+	<!--* End footer *-->
+
+
+</section>
+<!--** End Browse modules page **-->
+
+<!--** My modules page - Shows a list of all modules **-->
+<section data-role="page" id="mymodules">
+	<!--* Header *-->
+	<div data-role="header" data-position="fixed"  class="inner-header">
+		<a class="inner-header-back-link " data-rel="back"><span class="fa-arrow-left fa"></span></a>
+		<h3>My modules</h3>
+		<a href="#home" class="home-logo-link"><img src="img/dit_logocol_reverse.png" class="dit-logo" width="55" alt="DIT logo"></a>
+	</div>
+	<!--* End Header *-->
+	<!--* Main body *-->
+	<div role="main" class="ui-content">
+		<article class="list-item">
+			<a href="#module?1234">
+				<p class=""><span id="mod-id">1234</span> Module 1 title <i class="fa fa-angle-right"></i></p>
+			</a>
+		</article>
+		<article class="list-item">
+			<a href="#module?1235">
+				<p class="mod-detail-title"><span id="mod-id">1235</span> Module 2 title <i class="fa fa-angle-right"></i></p>
+			</a>
 		</article>
 	</div>
 	<!--* End Main body *-->
@@ -173,14 +221,9 @@
 	<div role="main" class="ui-content">
 
 		<article class="mod-full">
-			<h3 class="mod-title">Module 1 title</h3>
-			<p class="mod-credits">ECT Credits <span id="mod-credits">5</span></p>
-			<p class="mod-duedate">Due: <em>25th May 2015</em></p>
-			<p class="mod-website"><a href="#">Module website</a></p>
-			<p class="mod-lecturer"><a href="#lecturer">Lecturer Name</a></p>
-			<p class="mod-room">Room <span id="mod-room-no">A1-027</span></p>
-			<p class="mod-get-directions"><a href="#map">Get directions</a></p>
+
 		</article>
+		<a class="ui-btn" href="#map">Get directions</a>
 	</div>
 	<!--* End Main body *-->
 	<!--* Footer *-->
@@ -192,6 +235,31 @@
 
 </section>
 <!--** End Single Student page **-->
+<!--** Lecturers page - all lecturers **-->
+<section data-role="page" id="lecturers">
+	<!--* Header *-->
+	<div data-role="header" data-position="fixed"  class="inner-header">
+		<a class="inner-header-back-link " data-rel="back"><span class="fa-arrow-left fa"></span></a>
+		<h3>Academics</h3>
+		<a href="#home" class="home-logo-link"><img src="img/dit_logocol_reverse.png" class="dit-logo" width="55" alt="DIT logo"></a>
+	</div>
+	<!--* End Header *-->
+	<!--* Main body *-->
+	<div role="main" class="ui-content">
+		
+		<!-- Lecturers -->
+		
+
+	</div>
+	<!--* End Main body *-->
+	<!--* Footer *-->
+	<div data-role="footer" data-position="fixed">
+		<p>&nbsp;</p>
+	</div>
+	<!--* End footer *-->
+
+</section>
+<!--** End Lecturer page **-->
 <!--** Lecturer page - infomation about a lecturer **-->
 <section data-role="page" id="lecturer">
 	<!--* Header *-->

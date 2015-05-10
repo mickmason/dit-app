@@ -1,5 +1,6 @@
 	//Used to identify a type of user and if a user is logged in.
 	var userType = "student";
+	var userID = 126;
 	//User identifies themselves 
 	$('#lecturer-user').on('click', function(e) {
 		e.preventDefault();
@@ -18,13 +19,12 @@
 	});
 
 	var getAJAXData = function(url, success, xd) {
-		console.log("getAJAXData") ;
+		
 		$.ajax(url, {
 		  success: success
 		});
 	}
 	var getData = function(path, cb) {
-		console.log(path) ;
 		$.getJSON(path, function (data) {	
 
 			if (data) {
@@ -41,113 +41,121 @@
 			$('#user-modal').css('display', 'block') ;
 		}
 	}
-	//Check the user type
-//	checkUser();
+	//Shows one module - added to the #module page
+	var showOneModule = function(data) {
+		console.log(data)	;
 	
-	//Makes a HTML table
-	function makeTable() {
-		thead = $('<thead></thead>') ;
-		tbody = $('<tbody></tbody>') ;
-		tab = $('<table></table>') ;
-		tab.append(thead).append(tbody) ;
-		return tab;
-	}//makeTable
-
-	var showModulesData = function(data) {
-
-		$('#home').append(makeTable()) ;
-		
-		headTr =  $('<tr></tr>') ;
-		headTr.append($('<td></td>').text('Module No.'));
-		headTr.append($('<td></td>').text('Module Name'));
-		headTr.append($('<td></td>').text('Credits'));
-		headTr.append($('<td></td>').text('Website'));
-		headTr.append($('<td></td>').text('Due date'));
-		headTr.append($('<td></td>').text('Campus'));
-		headTr.append($('<td></td>').text('Room'));
-		headTr.append($('<td></td>').text('Lat'));
-		headTr.append($('<td></td>').text('Long'));
-		$('#home thead').append(headTr) ;
-
+		var modPage = $('#module') ;
+var paras = [] ;
 		for (var i=0; i<data.modules.length; i++) {
-			var tds = [];
-			var j = 0;
-			for (var key in data.modules[i]) {
-				tds[j] = $('<td></td>').text(data.modules[i][key]) ;
-				j++;
-			}
+			//Add title
+			modPage.find('.inner-header').find('h3').text(data.modules[i].moduleName);
+			
+			paras.push($('<p></p>').attr('class', 'mod-credits').append("ECT credits: "+data.modules[i].credits));
+			paras.push($('<p></p>').attr('class', 'mod-duedate').append("Due date: "+data.modules[i].dueDate));
+			var website = $('<a></a>').attr({'href': data.modules[i].website }).text(data.modules[i].website);
+			paras.push($('<p></p>').attr('class', 'mod-website').append("Website: ").append(website));
+			paras.push($('<p></p>').attr('class', 'mod-room').append("Room: "+data.modules[i].room));
 
-
-			tr = $('<tr></tr>') ;
-			for (var j in tds) {
-				tr.append(tds[j]) ;
-			}
-			$('#home tbody').append(tr) ;
 		}		
-	}//showModulesData()
-	var showStudentData = function(data) {
-
-		$('.student student-modules').append(makeTable()) ;
+		modPage.find('.mod-full').text('') ;
+		for (var i in paras) {
+			modPage.find('.mod-full').append(paras[i]) ;
+		}
+	}//showMyModulesData()
+	$(document).on('click', '.module-link', function() {
+		var id = $(this).attr('data-modid') ;
+		console.log(id) ;
+		getData('data_endpoint/json-data-single-module.php?moduleid='+id, showOneModule) ;
+	}) ;
+	/** Gets a list of Modules */
+	var showMyModules = function(data) {
+		console.log(data)	;
 		
-		headTr =  $('<tr></tr>') ;
-		headTr.append($('<td></td>').text('Student ID'));
-		headTr.append($('<td></td>').text('First Name'));
-		headTr.append($('<td></td>').text('Last Name'));
-		headTr.append($('<td></td>').text('Mod 1 ID'));
-		headTr.append($('<td></td>').text('Mod 2 ID'));
-		headTr.append($('<td></td>').text('Course ID'));
-		$('#students thead').append(headTr) ;
-
-		
-		for (var i=0; i<data.students.length; i++) {
-			var tds = [];
-			var j = 0;
-			for (var key in data.students[i]) {
-				tds[j] = $('<td></td>').text(data.students[i][key]) ;
-				j++;
-			}
+		var list = []
+	
+		for (var i=0; i<data.modules.length; i++) {
+			var link =$('<a></a>').attr({'href': "#module?"+data.modules[i].moduleNo, 'data-modid': data.modules[i].moduleNo}).addClass('module-link');
 
 
-			tr = $('<tr></tr>') ;
-			for (var j in tds) {
-				tr.append(tds[j]) ;
-			}
-			$('#students tbody').append(tr) ;
+			
+			var modTitle = data.modules[i].moduleName;
+			var angleRight = $('<i></i>').addClass('fa fa-angle-right');
+			var para = $('<p></p>');
+
+			para.append(modTitle).append(angleRight) ;
+			link.append(para) ;
+			var listItem = $('<article></article>').addClass('list-item') ;
+			listItem.append(link) ;
+			list.push(listItem) ;
 		}		
-	}//showStudentsData()
+		$('#mymodules .ui-content').text('') ;
+		for (var i = 0; i<list.length; i++) {
+			$('#mymodules .ui-content').append(list[i]);
+		}
+	}//showMyModulesData()
+	$('#home #getmymodules').on('click', function(e) {
+		getData('data_endpoint/json-data-student-modules.php?studentid='+userID, showMyModules) ;
+	});
 
-	var showLecturerData = function(data) {
-		$('lecturer lecturer-modules').append(makeTable())  ;
-		headTr =  $('<tr></tr>') ;
-		headTr.append($('<td></td>').text('Staff number'));
-		headTr.append($('<td></td>').text('First Name'));
-		headTr.append($('<td></td>').text('Last Name'));
-		headTr.append($('<td></td>').text('Mod 1 ID'));
-		headTr.append($('<td></td>').text('Mod 2 ID'));
-		headTr.append($('<td></td>').text('Email'));
-		$('#lecturers thead').append(headTr) ;
+
+	//Shows all lecturer data, appends it to #lecturers page
+	var showLecturersData = function(data) {
+		var lecturers = [] ;
 		for (var i=0; i<data.lecturers.length; i++) {
-			var tds = [];
-			var j = 0;
-			for (var key in data.lecturers[i]) {
-				if (key === "email") {
-					var link = $("<a></a>") ;
-					link.attr('href', 'mailto:'+data.lecturers[i][key]) ;
-					link.text(data.lecturers[i][key]) ;
-					
-					tds[j] = $('<td></td>').append(link) ;
-				} else {
-					tds[j] = $('<td></td>').text(data.lecturers[i][key]) ;	
-				}
-				j++;
-			}
-			tr = $('<tr></tr>') ;
-			for (var j in tds) {
-				tr.append(tds[j]) ;
-			}
-			$('#lecturers tbody').append(tr) ;
-		}		
-	}//showLecturersData()	
+
+				var article = $('<article></article').addClass('list-item');
+				var link = $('<a></a>').attr({'href': '#lecturer', 'class': 'ui-link lecturer-link', 'data-lecturer-id': data.lecturers[i].staffNumber});
+				var para = $('<p></p>');
+				var angleRight = $('<i></i>').addClass('fa fa-angle-right');
+				para.append(data.lecturers[i].firstName + " "+data.lecturers[i].lastName).append(angleRight) ;
+				
+				
+				link.append(para);
+				article.append(link);
+				lecturers.push(article);
+
+			
+		}	
+		$('#lecturers .ui-content').text('') ;	
+		for (var i in lecturers) {
+			$('#lecturers .ui-content').append(lecturers[i]) ;
+		}
+		
+	}//showLecturersData()
+	//Shows all lecturer data, appends it to #lecturers page
+	var showLecturerData = function(data) {
+		console.log(data) ;
+		var lecturer = [] ;
+		$('#lecturer').find('.inner-header').find('h3').text(data.lecturers[0].firstName + " "+data.lecturers[0].lastName);
+		for (var i=0; i<data.lecturers.length; i++) {
+			lecturer.push() ;
+			
+			var email = $('<a></a>').attr('href', 'mailto:'+data.lecturers[i].email).append(data.lecturers[i].email);
+			console.log(email) 
+			lecturer.push($('<p></p>').attr('class', 'lect-email').append("Email: ").append(email));
+			var modLink1 = $('<a></a>').attr({'href': "#module?"+data.lecturers[i].moduleNo1, 'data-modid': data.lecturers[i].moduleNo1}).addClass('module-link');
+			modLink1.append(data.lecturers[i].moduleNo1) ;
+			lecturer.push($('<p></p>').attr('class', 'lect-module').append("Teaches mod id: ").append(modLink1));
+			var modLink2 = $('<a></a>').attr({'href': "#module?"+data.lecturers[i].moduleNo2, 'data-modid': data.lecturers[i].moduleNo2}).addClass('module-link');
+			modLink2.append(data.lecturers[i].moduleNo2) ;
+			lecturer.push($('<p></p>').attr('class', 'lect-module').append("Teaches mod id: ").append(modLink2));
+			
+		}	
+		$('#lecturer .ui-content').text('') ;
+		for (var i in lecturer) {
+			$('#lecturer .ui-content').append(lecturer[i]) ;
+		}
+		
+	}//showLecturersData()
+	$('#lecturers').on('click', getData('data_endpoint/json-data-lecturers.php', showLecturersData));
+	//Delegate a click on lecturers links
+	$(document).on('click', '.lecturer-link', function(e) {
+		var id = $(this).attr('data-lecturer-id') ;
+		console.log(id) ;
+		getData('data_endpoint/json-data-single-lecturer.php?lecturerid='+id, showLecturerData);
+	}) ;
+
 	// getData('data_endpoint/json-data-students.php',showStudentData) ;
 	// getData('data_endpoint/json-data-lecturers.php',showLecturerData) ;
 	// getData('data_endpoint/json-data-modules.php',showModulesData) ;
@@ -403,7 +411,6 @@
 
 	//Uses HTML5 orientation to change the compass bearing
 	function deviceOrientationListener(e) {
-			console.log(e.alpha) ;
 			var rot = 0;
 			rot = e.alpha;
 			document.getElementById('rot').innerHTML = rot;

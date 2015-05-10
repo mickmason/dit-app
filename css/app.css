@@ -12,7 +12,7 @@ body {
   color: #333;
 }
 input, select, textarea, button, .ui-btn { font-family: "Roboto", sans-serif; }
-p { font-size: 0.875rem; line-height: 1.250; /* 14/20*/}
+p { font-size: 1rem; line-height: 1.250; /* 14/20*/}
 
 h1, h2, h3, h4 {
 /*  margin: 1.414em 0 0.5em;*/
@@ -34,7 +34,7 @@ h4 {font-size: 1.25em;}
 
 small, .font_small {font-size: 0.8em;}
 
-.ui-page-theme-a a, html .ui-bar-a a, html .ui-body-a a, html body .ui-group-theme-a a { color:  #0060aa ; text-decoration: none }
+.ui-page-theme-a a, html .ui-bar-a a, html .ui-body-a a, html body .ui-group-theme-a a { color:  #0060aa ; text-decoration: none; font-weight: 400; }
 .ui-page-theme-a a:hover, html .ui-bar-a a:hover, html .ui-body-a a:hover, html body .ui-group-theme-a a:hover { color: #0060aa; text-decoration: underline }
 .ui-page-theme-a a:visited, html .ui-bar-a a:visited, html .ui-body-a a:visited, html body .ui-group-theme-a a:visited { color: #0196d8; }
 
@@ -149,6 +149,7 @@ html body .ui-group-theme-a .ui-btn:visited, html head+body .ui-btn.ui-btn-a:vis
 		background-color: #0196d8;
 		color: #fff;
 		border-color: transparent;
+		font-weight: 400;
 }
 .ui-page-theme-a .ui-btn:hover, .ui-page-theme-a .ui-btn:focus, html .ui-bar-a .ui-btn:hover, html .ui-bar-a .ui-btn:focus, html .ui-body-a .ui-btn:hover, html .ui-body-a .ui-btn:focus,
 html body .ui-group-theme-a .ui-btn:hover, html body .ui-group-theme-a .ui-btn:focus, html head+body .ui-btn.ui-btn-a:hover, html head+body .ui-btn.ui-btn-a:focus {
@@ -171,8 +172,21 @@ html body .ui-group-theme-a .ui-btn:hover, html body .ui-group-theme-a .ui-btn:f
 		box-shadow: 0px 3px 20px 2px rgba(0,0,0,0.28);			
 }
 
-.ui-content .list-item {
-	
+.list-item a {
+	font-size: 1rem;
+	font-weight: 400;
+	/*color: inherit;*/
+	display: block;
+}
+.list-item p { margin: 0; line-height: 1;  }
+.list-item .list-item-line-two { font-size: 0.875rem; color: #989898; margin-top: 8px; }
+.list-item { padding: 16px 0 20px; border-bottom: 1px solid #ababab; }
+.list-item a:hover { text-decoration: none; /*color: inherit */}
+.list-item a .fa {
+	  position: fixed;
+  right: 16px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 #map-wrap { height: 400px; margin: 20px 0 0;}

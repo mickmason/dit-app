@@ -10,8 +10,8 @@ header('Access-Control-Allow-Origin: http://localhost:8383');
 // array for JSON response
 $response = array();
 //Student ID 
-if (isset($_GET['lecturerid'])){
-    $lectID = $_GET['lecturerid'];
+if (isset($_GET['studentid'])){
+    $stID = $_GET['studentid'];
 } else {
     // no modules found
     $response["success"] = 0;
@@ -19,8 +19,7 @@ if (isset($_GET['lecturerid'])){
 
     // echo no modules JSON
     print (json_encode($response));
-    //echo (json_encode($response));
-    return;    
+    //echo (json_encode($response));    
 }
 
 // include db connect class
@@ -29,9 +28,9 @@ require_once __DIR__ . '/db_connect.php';
 // connecting to db
 $db = new DB_CONNECT();
 //Array of student module IDs
-$lectModules = array();
+$stdModules = array();
 //Get student modules
-$result = mysql_query("SELECT moduleNo1, moduleNo2 FROM lecturertable WHERE staffNumber=".$lectID) or die(mysql_error());
+$result = mysql_query("SELECT moduleNo1, moduleNo2 FROM studenttable WHERE studentID=".$stID) or die(mysql_error());
 // check for empty result
 if (mysql_num_rows($result) > 0)
  {
@@ -39,8 +38,8 @@ if (mysql_num_rows($result) > 0)
     while ($row = mysql_fetch_array($result)) 
     {
 
-            $lectModules["moduleNo1"] = $row["moduleNo1"];
-            $lectModules["moduleNo2"] = $row["moduleNo2"];
+            $stdModules["moduleNo1"] = $row["moduleNo1"];
+            $stdModules["moduleNo2"] = $row["moduleNo2"];
     }
 } else {
     // no modules found
@@ -50,17 +49,17 @@ if (mysql_num_rows($result) > 0)
     print (json_encode($response));
     //echo (json_encode($response));
 }
-
+$response["modules"] = array();
 // get modules from module table based on id(s) returned
-foreach ($lectModules as $lectModule) {
-    $result = mysql_query("SELECT * FROM moduleTable WHERE moduleNo=".$lectModule) or die(mysql_error());
+foreach ($stdModules as $stdModule) {
+    $result = mysql_query("SELECT * FROM moduleTable WHERE moduleNo=".$stdModule) or die(mysql_error());
 
     // check for empty result
     if (mysql_num_rows($result) > 0)
      {
         // looping through all results
         // modules node
-        $response["modules"] = array();
+        
 
          while ($row = mysql_fetch_array($result)) 
          {
@@ -91,8 +90,7 @@ if (count($response)> 0) {
 
     // echoing JSON response
     print (json_encode($response));
-    // echo (json_encode($response));  
-    return 
+    // echo (json_encode($response));   
 }else {
     
     // no modules found
@@ -102,7 +100,6 @@ if (count($response)> 0) {
     // echo no modules JSON
     print (json_encode($response));
     //echo (json_encode($response));
-    return;
 }
 
 ?>
