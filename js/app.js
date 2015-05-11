@@ -43,32 +43,41 @@
 	}
 	//Shows one module - added to the #module page
 	var showOneModule = function(data) {
-		console.log(data)	;
-	
+		//Get the module page object
 		var modPage = $('#module') ;
-var paras = [] ;
+		//For paras to be appended - each contains some data about the module
+		var paras = [] ;
 		for (var i=0; i<data.modules.length; i++) {
-			//Add title
+			//Add title to the app bar
 			modPage.find('.inner-header').find('h3').text(data.modules[i].moduleName);
-			
+			//ECT credits
 			paras.push($('<p></p>').attr('class', 'mod-credits').append("ECT credits: "+data.modules[i].credits));
+			//Module due date
 			paras.push($('<p></p>').attr('class', 'mod-duedate').append("Due date: "+data.modules[i].dueDate));
+			//Make a link to the module website
 			var website = $('<a></a>').attr({'href': data.modules[i].website }).text(data.modules[i].website);
+			//Append that prefixed with "Website"
 			paras.push($('<p></p>').attr('class', 'mod-website').append("Website: ").append(website));
+			//Room no
 			paras.push($('<p></p>').attr('class', 'mod-room').append("Room: "+data.modules[i].room));
 
 		}		
+		//Clear the #module page
 		modPage.find('.mod-full').text('') ;
+		//For each para 
 		for (var i in paras) {
+			//Append to the module page
 			modPage.find('.mod-full').append(paras[i]) ;
 		}
 	}//showMyModulesData()
+	//For the module link (any module link in any content) delegate a click/tap handler 
 	$(document).on('click', '.module-link', function() {
 		var id = $(this).attr('data-modid') ;
-		console.log(id) ;
+		//Get the data for the module - the id is added as data-modid attribute to the element
 		getData('data_endpoint/json-data-single-module.php?moduleid='+id, showOneModule) ;
 	}) ;
-	//Utility function that makes a list of modules. takes a module and returns a <article> element containing the name, a link to the module full page.
+	//A utility function that makes a list of modules. Takes a module and returns a <article> element containing the name, a link to the module full page.
+	//It's used by showMyMModules and showAllModule's functions
 	var makeModules = function(mod) {
 			var link =$('<a></a>').attr({'href': "#module?"+mod.moduleNo, 'data-modid': mod.moduleNo}).addClass('module-link');
 			var modTitle = mod.moduleName;
@@ -83,8 +92,6 @@ var paras = [] ;
 	}
 	/** Show a list a list of Modules, append them to the #browsemodules page */
 	var showMyModules = function(data) {
-		console.log(data)	;
-		
 		var list = []
 	
 		for (var i=0; i<data.modules.length; i++) {
@@ -100,7 +107,7 @@ var paras = [] ;
 
 	/** Show a list all of Modules, append them to the #mymodules page */
 	var showAllModules = function(data) {
-		console.log(data)	;
+
 		
 		var list = []
 	
@@ -116,41 +123,53 @@ var paras = [] ;
 		}
 
 	}//showAllModules()
+	//Bind this to the #getmymodules link on the homepage - it's based on the userID value which is set at the top of this script
+	//When login is implemented this will be set by the user's submitted ID
 	$('#home #getmymodules').on('click', function(e) {
-		console.log(click)
 		getData('data_endpoint/json-data-student-modules.php?studentid='+userID, showMyModules) ;
 	});
-	//Get my modules
+	//Get all modules - handler bound to the link on the homepage
 	$('#home #getallmodules').on('click', function(e) {
 		getData('data_endpoint/json-data-modules.php', showAllModules) ;
 	});
 
-
-	//Shows all lecturer data, appends it to #lecturers page
+	//Shows all lecturers, appends a list of lecturers to #lecturers page
 	var showLecturersData = function(data) {
 		var lecturers = [] ;
+		//For each lecturer object
 		for (var i=0; i<data.lecturers.length; i++) {
-
+				//Create an <article> element - .list-item styles it like a material's design list element
 				var article = $('<article></article').addClass('list-item');
+				//This create a link to the the lecturer's full profile. It adds the staff number as a data-lecturer-id attribute
+				//That is used in getting the lecturer's full profile information 
 				var link = $('<a></a>').attr({'href': '#lecturer', 'class': 'ui-link lecturer-link', 'data-lecturer-id': data.lecturers[i].staffNumber});
+				//Para for each entry
 				var para = $('<p></p>');
+				//Angle right indicating what will happen on click
 				var angleRight = $('<i></i>').addClass('fa fa-angle-right');
+				//Append the name and the angle to the para
 				para.append(data.lecturers[i].firstName + " "+data.lecturers[i].lastName).append(angleRight) ;
 				
-				
+				//Wrap the para in a link
 				link.append(para);
+				//Append that to the <article>
 				article.append(link);
+				//Add it to the lecturers array
 				lecturers.push(article);
 
 			
 		}	
+		//Clear the page content
 		$('#lecturers .ui-content').text('') ;	
+		//For each in lecturers[]
 		for (var i in lecturers) {
+			//Append the lecturer item
 			$('#lecturers .ui-content').append(lecturers[i]) ;
 		}
 		
 	}//showLecturersData()
-	//Shows all lecturer data, appends it to #lecturers page
+	//Shows a single lecturer data, appends it to #lecturers page
+	//Takes the lecturer data returned from the getData call and adds it to the lecturer page
 	var showLecturerData = function(data) {
 		console.log(data) ;
 		var lecturer = [] ;
@@ -159,7 +178,6 @@ var paras = [] ;
 			lecturer.push() ;
 			
 			var email = $('<a></a>').attr('href', 'mailto:'+data.lecturers[i].email).append(data.lecturers[i].email);
-			console.log(email) 
 			lecturer.push($('<p></p>').attr('class', 'lect-email').append("Email: ").append(email));
 			var modLink1 = $('<a></a>').attr({'href': "#module?"+data.lecturers[i].moduleNo1, 'data-modid': data.lecturers[i].moduleNo1}).addClass('module-link');
 			modLink1.append(data.lecturers[i].moduleNo1) ;
@@ -175,37 +193,40 @@ var paras = [] ;
 		}
 		
 	}//showLecturersData()
+	//"The academics" link on the homepage
 	$('#lecturers').on('click', getData('data_endpoint/json-data-lecturers.php', showLecturersData));
-	//Delegate a click on lecturers links
+	//Delegate a click on the lecturers links in the lecturer's listing
 	$(document).on('click', '.lecturer-link', function(e) {
+		//The id is the one added in showLecturerData
 		var id = $(this).attr('data-lecturer-id') ;
-		console.log(id) ;
+		//It's used as query argument in the getData call
 		getData('data_endpoint/json-data-single-lecturer.php?lecturerid='+id, showLecturerData);
 	}) ;
 
-	// getData('data_endpoint/json-data-students.php',showStudentData) ;
-	// getData('data_endpoint/json-data-lecturers.php',showLecturerData) ;
-	// getData('data_endpoint/json-data-modules.php',showModulesData) ;
+	/** End standard use cases **/
 
 	/***
-	** Google Maps API and webservice
-	**
+	** Extended use cases
+	** Google Maps API and webservice, d
+	** Device location information
+	** Device orientation 
+	** 
 	***/
 	var usersLocationObject = null ;
-	//Creates a Google Map
+	//Creates a Google Map from Maps API
 	function addSimpleMap(locationsObject) {
-		//Initalize the Map. This adds a draw directions function and sets event handlers which call the draw directions function 
+		//Initalize the Map. This creaets a drawDirections function and sets event handlers which call the draw directions function 
 		var initMaps = function() {
 			//Flag - if the map has a directions polyline
 			var hasDirections = false;
 			//Create a new Map object
 			var directionsMap = new google.maps.Map(document.getElementById('map-wrap'));
-			//THis will be a Google maps Polyline to draw directions
+			//This will be a Google maps Polyline to draw directions
 			var directionsPath = null;
 			//Block for textual directions
 			var $textDirections = $('.get-dirs-directions') ;
 
-			//Campuses LatLngs - used in the query to the Maps API as origin and destination coords
+			//Campuses LatLngs - used in the query to the Maps API as origin and/or destination coords
 			var aungierLatLngStr = "53.338545,-6.26607";
 			var kevinsLatLngStr = "53.337015,-6.267933" ;
 			var boltonLatLngStr = "53.351406,-6.268724"
@@ -214,23 +235,22 @@ var paras = [] ;
 			var aungierLatLng =	new google.maps.LatLng( 53.338545, -6.26607);
 			var kevinsStLatLng = new google.maps.LatLng(53.337015,-6.267933);
 			var boltonStLatLng = new google.maps.LatLng(53.351406,-6.268724);
-			//TBC
+			//TBC - if the user allows user location use.
 			var userLatLngStr = "" ;
 			var userLatLng = null ;
-			//Center the Map on Aungier St - may change. Zoom 12
+			//Center the Map on Aungier St. Changes after the user requests directions. Zoom: 12
 			var mapOptions = {
 	          center: aungierLatLng,
 	          zoom: 12
 	        };
-	        //Set the options
+	        //Set the map options
 	       	directionsMap.setOptions(mapOptions);
 	       	//Set up a marker for the user if the device supports geolocation
 	        var userMarker = null;
 	        //Set some markers
-	        //If the user's coordinates have been retrieved do
+	        //If the user's coordinates have been passed to the function do user's marker
 	        if (locationsObject.userLatLng) {
 	        	userMarker = new google.maps.Marker(); 
-	        	var userLatLngStr = locationsObject.userLatLng.userLatitude+","+locationsObject.userLatLng.userLongitude;
 	        	var userLatLng = new google.maps.LatLng(locationsObject.userLatLng.userLatitude, locationsObject.userLatLng.userLongitude);
 	        	userMarker.setOptions({
 	        		position: userLatLng,
@@ -242,6 +262,7 @@ var paras = [] ;
 	        	directionsMap.setCenter(userLatLng) ;
 	        }
 	        //Set a marker for each campus
+	        //the map: element adds the marker to the Map
 	        aungierMarker = new google.maps.Marker({
 	        	position: aungierLatLng,
 	        	map: directionsMap,
@@ -259,11 +280,15 @@ var paras = [] ;
 	        }) ;
 
 			//Draws directions polylines onto the map and adds directions to directions block
-			//It is called after click on the directions Go button
+			//It is called after click on the directions "Go" button
+			//Data is returned as json.
 			function drawDirections(data) {
-
 				data = JSON.parse(data) ;
+
+				//**See console to see the data**//
 				console.log(data) ;
+				//**See console to see the data**//
+				
 				var htmlInstructions = [] ;
 				//Map results returned
 				if (data.status === "OK"){
@@ -275,36 +300,41 @@ var paras = [] ;
 				      				new google.maps.LatLng(parseFloat(data.routes[0].bounds.southwest.lat), parseFloat(data.routes[0].bounds.southwest.lng)),
 				      				new google.maps.LatLng(parseFloat(data.routes[0].bounds.northeast.lat), parseFloat(data.routes[0].bounds.northeast.lng))
 				      			);
-								//Set them
+								//Set them - set the map within those bounds
 								directionsMap.fitBounds(dirsBounds) ;
 								
 								//Create polylines to add to the map. Array of maps LatLng objects
+								//These are added to the data returned from maps web service by json-data-google-directions.php
+								//That script uses a library to parse the encoded polyline information into an array of coordinates
+								//The coordinates are added here  as Map LatLng objects
 								var polylinesCoords = [] ;
 								//Lat/Lng coordinates for each LatLng object
 								var polylineLat =null ;
 								var polylineLng =null ;
 								//For the journey duration
 								var duration = 0;
-
+								//In each route in the directions
 								for (var i=0 in data.routes) {
-									//Get the decoded polylines coordinates - this is an array of lat/lng coordiates
+									//Get the decoded polylines coordinates - this is an array of coordiates
 									for (var j in data.routes[i].overview_polyline.decoded_points) {
+										//Even => lat
 										if (j%2 == 0) {
 											//Even indexes = lat
 											polylineLat = data.routes[i].overview_polyline.decoded_points[j] ;	
 										} else {
 											//Uneven indexes = lng
 											polylineLng = data.routes[i].overview_polyline.decoded_points[j] ;
-											//Push the coords to the polylineCoords array
+											//Push the coords to the polylineCoords array - each is a Maps LatLng object
 											polylinesCoords.push(new google.maps.LatLng(polylineLat, polylineLng));
 										}
 									}
-									//Get the HTML instructions and duration for each leg, push them to the instructions array
+									//Get the HTML instructions and duration for each leg in each route, push them to the instructions array
 									for (var j=0 in data.routes[i].legs) {
-											//Get the journey duration 
-											duration += data.routes[i].legs[i].duration.value;
-											//Get the start address, end address
-											htmlInstructions.push(data.routes[i].legs[i].start_address+" to "+data.routes[i].legs[i].end_address);
+										//Get the journey duration 
+										duration += data.routes[i].legs[i].duration.value;
+										//Get the start address, end address
+										htmlInstructions.push(data.routes[i].legs[i].start_address+" to "+data.routes[i].legs[i].end_address);
+										//For each step in each leg
 										for (var k=0 in data.routes[i].legs[j].steps) {
 											//Push the html instructions
 											htmlInstructions.push(data.routes[i].legs[j].steps[k].html_instructions)	;	
@@ -313,7 +343,8 @@ var paras = [] ;
 								}
 								//Push the duration
 								htmlInstructions.push("Duration: "+Math.floor((duration)/60) +"mins approx.");
-								//Create the directions polyline based on the array of coordinates gathered and other options
+								//Then create the directions polyline based on the array of coordinates gathered and other options
+								//The array of coordinates is set as the path value - this draws the directions line
 								directionsPath = new google.maps.Polyline({
 									path: polylinesCoords,
 									geodesic: true,
@@ -324,7 +355,6 @@ var paras = [] ;
 								});
 					//Flag that the map has directions added - tested when th user location pin is dragged
 					hasDirections = true;
-
 				//Map results not returned
 				} else {
 					//No results
@@ -349,7 +379,7 @@ var paras = [] ;
 
 			/**
 			* Two event handlers which request directions and re-draw the map with direction polylines 
-			* Click the search "Go" button and on drag the user location pin
+			* Click the search "Go" button and drag the user location pin
 			**/
 			//Click on the "Go" Button to get directions
 			//Start point:
@@ -358,13 +388,13 @@ var paras = [] ;
 			var destination = "";
 			//Travel mode
 			var mode = "";
-			//Click the button
+			//Click the button - start/end locations are retrieved from the select elements
 	        $(document.getElementById('get-dirs-go-btn')).on('click', function(e) {	        	
 	        	e.preventDefault();
 	        	//Origin and direction from the select elements
 	        	origin = $('#get-dirs-start-sel').val();
 	        	destination = $('#get-dirs-end-sel').val() ;
-	        	//Wrong
+	        	//Wrong - start = end
 	        	if (origin === destination) {
 	        			$textDirections.text("");
 	        			$textDirections.append("Start and end points are the same. Try again") ;
@@ -375,9 +405,9 @@ var paras = [] ;
 	        	}
 	        	//Origin = where I am now
 	        	if (origin === "here" ) { 
-	        		//Get the position of the userMarker
+	        		//Get the position of the userMarker as a Maps LatLng object
 	        		var uLatLng = userMarker.getPosition() ;
-	        		//Get lat/lng
+	        		//Get lat/lng string
 	        		var userLat = uLatLng.lat().toString();
 	        		var userLng = uLatLng.lng().toString();
 	        		//set the origin - passed the PHP script query
@@ -386,13 +416,14 @@ var paras = [] ;
 
 	        	//Travel mode - from the mode radio buttons
 	        	mode = $('#get-dirs-mode input:checked').val();
-	        	//If the 
+	        	//If the map alread has directions, remove them
 	        	if (directionsPath) {
 	        		directionsPath.setMap(null) ;
 	        	}
-	        	getAJAXData("/polyline_decode_test/json-data-google-directions.php?origin="+encodeURI(origin)+"&dest="+encodeURI(destination)+"&mode="+mode, drawDirections) ;
+	        	//Get data 
+	        	getAJAXData("data_endpoint/json-data-google-directions.php?origin="+encodeURI(origin)+"&dest="+encodeURI(destination)+"&mode="+mode, drawDirections) ;
 	        });
-
+			//User drags the user marker on the map
 			 google.maps.event.addListener(userMarker, 'dragend', function() {
 			 	if (hasDirections) {
 			 		var uLatLng = userMarker.getPosition() ;
@@ -403,13 +434,13 @@ var paras = [] ;
 	        			directionsPath.setMap(null) ;
 	        		}
 
-			 		getAJAXData("/polyline_decode_test/json-data-google-directions.php?origin="+encodeURI(origin)+"&dest="+encodeURI(destination)+"&mode="+mode, drawDirections) ;
+			 		getAJAXData("data_endpoint/json-data-google-directions.php?origin="+encodeURI(origin)+"&dest="+encodeURI(destination)+"&mode="+mode, drawDirections) ;
 			 	}
-				//console.log('dragend') ;
-				//getAJAXData("/polyline_decode_test/json-data-google-directions.php?origin="+encodeURI(origin)+"&dest="+encodeURI(destination)+"&mode="+mode, drawDirections) ;
-			}) ;
+
+			}) ;//end handler
 
 		}//end initMaps()
+		//Call init maps
 		initMaps();
 	}//addSimpleMap
 
@@ -432,16 +463,19 @@ var paras = [] ;
 			}) ;
 		} else {
 			console.log("No geolocation") ;
+			//Pass in a null object to the callback => no user marker will be added
 			cb(null) ;
 		}	
 	}//getUserGeoLoc()
 
-	//Uses HTML5 orientation to change the compass bearing
+	//Uses HTML5 orientation to change the compass bearing beneath the map
 	function deviceOrientationListener(e) {
 			var rot = 0;
 			rot = e.alpha;
+			//It rotates the "n" element back to north to indicate the user's bearing - it could do with e, w and s. 
 			document.getElementById('compass-due-north').style.transform = "rotate("+rot+"deg)";
 	}
+	//If the device supports DeviceOrientation
 	if (window.DeviceOrientationEvent) {
 		window.addEventListener("deviceorientation", deviceOrientationListener);
 	}
