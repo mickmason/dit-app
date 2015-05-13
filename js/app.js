@@ -107,16 +107,11 @@
 
 	/** Show a list all of Modules, append them to the #mymodules page */
 	var showAllModules = function(data) {
-
-		
 		var list = []
-	
 		for (var i=0; i<data.modules.length; i++) {
 		
 			list.push(makeModules(data.modules[i])) ;
-		}
-		console.log(list.length) 		
-
+		}		
 		$('#browsemodules .ui-content').text('') ;
 		for (var i = 0; i<list.length; i++) {
 			$('#browsemodules .ui-content').append(list[i]);
@@ -156,8 +151,6 @@
 				article.append(link);
 				//Add it to the lecturers array
 				lecturers.push(article);
-
-			
 		}	
 		//Clear the page content
 		$('#lecturers .ui-content').text('') ;	
@@ -166,17 +159,14 @@
 			//Append the lecturer item
 			$('#lecturers .ui-content').append(lecturers[i]) ;
 		}
-		
 	}//showLecturersData()
 	//Shows a single lecturer data, appends it to #lecturers page
 	//Takes the lecturer data returned from the getData call and adds it to the lecturer page
 	var showLecturerData = function(data) {
-		console.log(data) ;
 		var lecturer = [] ;
 		$('#lecturer').find('.inner-header').find('h3').text(data.lecturers[0].firstName + " "+data.lecturers[0].lastName);
 		for (var i=0; i<data.lecturers.length; i++) {
 			lecturer.push() ;
-			
 			var email = $('<a></a>').attr('href', 'mailto:'+data.lecturers[i].email).append(data.lecturers[i].email);
 			lecturer.push($('<p></p>').attr('class', 'lect-email').append("Email: ").append(email));
 			var modLink1 = $('<a></a>').attr({'href': "#module?"+data.lecturers[i].moduleNo1, 'data-modid': data.lecturers[i].moduleNo1}).addClass('module-link');
@@ -185,7 +175,6 @@
 			var modLink2 = $('<a></a>').attr({'href': "#module?"+data.lecturers[i].moduleNo2, 'data-modid': data.lecturers[i].moduleNo2}).addClass('module-link');
 			modLink2.append(data.lecturers[i].moduleNo2) ;
 			lecturer.push($('<p></p>').attr('class', 'lect-module').append("Teaches mod id: ").append(modLink2));
-			
 		}	
 		$('#lecturer .ui-content').text('') ;
 		for (var i in lecturer) {
@@ -207,7 +196,7 @@
 
 	/***
 	** Extended use cases
-	** Google Maps API and webservice, d
+	** Google Maps API and webservice, 
 	** Device location information
 	** Device orientation 
 	** 
@@ -292,67 +281,66 @@
 				var htmlInstructions = [] ;
 				//Map results returned
 				if (data.status === "OK"){
-				
-								//Set the bounds of the map to fit the directions
-								//Get the bounds from the returned data
-								//Set SW/NE lat, lng
-								var dirsBounds = new google.maps.LatLngBounds(
-				      				new google.maps.LatLng(parseFloat(data.routes[0].bounds.southwest.lat), parseFloat(data.routes[0].bounds.southwest.lng)),
-				      				new google.maps.LatLng(parseFloat(data.routes[0].bounds.northeast.lat), parseFloat(data.routes[0].bounds.northeast.lng))
-				      			);
-								//Set them - set the map within those bounds
-								directionsMap.fitBounds(dirsBounds) ;
-								
-								//Create polylines to add to the map. Array of maps LatLng objects
-								//These are added to the data returned from maps web service by json-data-google-directions.php
-								//That script uses a library to parse the encoded polyline information into an array of coordinates
-								//The coordinates are added here  as Map LatLng objects
-								var polylinesCoords = [] ;
-								//Lat/Lng coordinates for each LatLng object
-								var polylineLat =null ;
-								var polylineLng =null ;
-								//For the journey duration
-								var duration = 0;
-								//In each route in the directions
-								for (var i=0 in data.routes) {
-									//Get the decoded polylines coordinates - this is an array of coordiates
-									for (var j in data.routes[i].overview_polyline.decoded_points) {
-										//Even => lat
-										if (j%2 == 0) {
-											//Even indexes = lat
-											polylineLat = data.routes[i].overview_polyline.decoded_points[j] ;	
-										} else {
-											//Uneven indexes = lng
-											polylineLng = data.routes[i].overview_polyline.decoded_points[j] ;
-											//Push the coords to the polylineCoords array - each is a Maps LatLng object
-											polylinesCoords.push(new google.maps.LatLng(polylineLat, polylineLng));
-										}
-									}
-									//Get the HTML instructions and duration for each leg in each route, push them to the instructions array
-									for (var j=0 in data.routes[i].legs) {
-										//Get the journey duration 
-										duration += data.routes[i].legs[i].duration.value;
-										//Get the start address, end address
-										htmlInstructions.push(data.routes[i].legs[i].start_address+" to "+data.routes[i].legs[i].end_address);
-										//For each step in each leg
-										for (var k=0 in data.routes[i].legs[j].steps) {
-											//Push the html instructions
-											htmlInstructions.push(data.routes[i].legs[j].steps[k].html_instructions)	;	
-										}	
-									}
-								}
-								//Push the duration
-								htmlInstructions.push("Duration: "+Math.floor((duration)/60) +"mins approx.");
-								//Then create the directions polyline based on the array of coordinates gathered and other options
-								//The array of coordinates is set as the path value - this draws the directions line
-								directionsPath = new google.maps.Polyline({
-									path: polylinesCoords,
-									geodesic: true,
-									strokeColor: '#FF0000',
-									strokeOpacity: 1.0,
-									strokeWeight: 2,
-									map: directionsMap
-								});
+					//Set the bounds of the map to fit the directions
+					//Get the bounds from the returned data
+					//Set SW/NE lat, lng
+					var dirsBounds = new google.maps.LatLngBounds(
+				      	new google.maps.LatLng(parseFloat(data.routes[0].bounds.southwest.lat), parseFloat(data.routes[0].bounds.southwest.lng)),
+				      	new google.maps.LatLng(parseFloat(data.routes[0].bounds.northeast.lat), parseFloat(data.routes[0].bounds.northeast.lng))
+				      );
+					//Set them - set the map within those bounds
+					directionsMap.fitBounds(dirsBounds) ;
+					
+					//Create polylines to add to the map. Array of maps LatLng objects
+					//These are added to the data returned from maps web service by json-data-google-directions.php
+					//That script uses a library to parse the encoded polyline information into an array of coordinates
+					//The coordinates are added here  as Map LatLng objects
+					var polylinesCoords = [] ;
+					//Lat/Lng coordinates for each LatLng object
+					var polylineLat =null ;
+					var polylineLng =null ;
+					//For the journey duration
+					var duration = 0;
+					//In each route in the directions
+					for (var i=0 in data.routes) {
+						//Get the decoded polylines coordinates - this is an array of coordiates
+						for (var j in data.routes[i].overview_polyline.decoded_points) {
+							//Even => lat
+							if (j%2 == 0) {
+								//Even indexes = lat
+								polylineLat = data.routes[i].overview_polyline.decoded_points[j] ;	
+							} else {
+								//Uneven indexes = lng
+								polylineLng = data.routes[i].overview_polyline.decoded_points[j] ;
+								//Push the coords to the polylineCoords array - each is a Maps LatLng object
+								polylinesCoords.push(new google.maps.LatLng(polylineLat, polylineLng));
+							}
+						}
+						//Get the HTML instructions and duration for each leg in each route, push them to the instructions array
+						for (var j=0 in data.routes[i].legs) {
+							//Get the journey duration 
+							duration += data.routes[i].legs[i].duration.value;
+							//Get the start address, end address
+							htmlInstructions.push(data.routes[i].legs[i].start_address+" to "+data.routes[i].legs[i].end_address);
+							//For each step in each leg
+							for (var k=0 in data.routes[i].legs[j].steps) {
+								//Push the html instructions
+								htmlInstructions.push(data.routes[i].legs[j].steps[k].html_instructions)	;	
+							}	
+						}
+					}
+					//Push the duration
+					htmlInstructions.push("Duration: "+Math.floor((duration)/60) +"mins approx.");
+					//Then create the directions polyline based on the array of coordinates gathered and other options
+					//The array of coordinates is set as the path value - this draws the directions line
+					directionsPath = new google.maps.Polyline({
+						path: polylinesCoords,
+						geodesic: true,
+						strokeColor: '#FF0000',
+						strokeOpacity: 1.0,
+						strokeWeight: 2,
+						map: directionsMap
+					});
 					//Flag that the map has directions added - tested when th user location pin is dragged
 					hasDirections = true;
 				//Map results not returned
@@ -462,7 +450,6 @@
 				cb(usersLocationObject) ;
 			}) ;
 		} else {
-			console.log("No geolocation") ;
 			//Pass in a null object to the callback => no user marker will be added
 			cb(null) ;
 		}	
@@ -481,5 +468,5 @@
 	}
 
 	//Kick off Maps
-	//The callback initializes a Google map search
+	//The callback initializes a Google map
 	getUserGeoLoc(addSimpleMap);
