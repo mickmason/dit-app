@@ -4,7 +4,7 @@ This project represents my submission for the final assignment for the Social Me
 
 Please see [the program description here]([http://www.dit.ie/postgrad/programmes/dt539bmscincreativedigitalmediapart-time/).
 
-I used jQuery mobile for the mobile behaviour. The app is set up using a single HTML page where each page has a `data-role="page"` attribute.
+I used jQuery mobile for the mobile behaviour. The app is set up using a single HTML page where each page has a `data-role="page"` attribute. I will recreate this using AngularJS and a Google Materials CSS framework as that is the basis for the app style. 
 
 ##Setup
 
@@ -16,15 +16,27 @@ Load `index.html` into the browser and you should be good to go.
 
 ##Files and folders
 
-`css\app.css` contains styling for the app that overrides the jQuery Mobile styling. 
+###`css\app.css` 
 
-`js\app.js` contains the app-specific JavaScript that does the work of getting and presenting data from various APIs and services. 
+This contains styling for the app that overrides the jQuery Mobile styling. 
 
-`img` contains the limited number of images that are used in the page. 
+Styling could be improved a lot. I used Google Materials Design for the styling and ended up in a wrestling match with jQuery Mobile styling. Needs to change.
 
-The `data-endpoint` directory is *nearly* an API. It needs some work to get it there yet. Either way, app.js makes most of its queries through the php files there. Most of the files are named fairly obviously. 
+###`js\app.js` 
 
-`json-data-google-directions.php` is possibly of interest. It takes an origin, and endpoint and a travel mode and creates uses those to send a request to the [Google Maps API Web Services](https://developers.google.com/maps/documentation/webservices/). This is done on the server as the maps service issues a server api key rather than a client one. 
+This contains the app-specific JavaScript that does the work of getting and presenting data from various APIs and services. 
+
+###`img` 
+
+Contains the limited number of images that are used in the page. 
+
+###`data-endpoint` 
+
+This is *nearly* an API. It needs some work to get it there yet. Either way, app.js makes most of its queries through the php files there. Most of the files are named fairly obviously. 
+
+####`json-data-google-directions.php` 
+
+This is possibly of interest. It takes an origin, and endpoint and a travel mode and creates uses those to send a request to the [Google Maps API Web Services](https://developers.google.com/maps/documentation/webservices/). This is done on the server as the maps service issues a server api key rather than a client one. 
 
 The returned data from Google Maps is encoded as JSON and it contains one or more possible routes, each of which is comprise of one or more legs, with start and end coordinates for each and a HTML description for each. It also includes a set of encoded [Maps polyline points](https://developers.google.com/maps/documentation/utilities/polylinealgorithm). I use [`includes\Polyline.php`](https://github.com/emcconville/google-map-polyline-encoding-tool) to decode the points. I pass each encoded point to `Polyline.php` and get back a coordinate for each - even = latitude, odd = longitute. That is added to an array, and the array is added to the JSON to be returned. 
 
