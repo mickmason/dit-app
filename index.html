@@ -16,32 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="css/app.css">
 </head>
 <body>
-<!--** Login page **-->
-<section data-role="page" id="login">
-	<!--* Header *-->
-	<div data-role="header" data-position="fixed">
-		<img src="img/dit_logocol_reverse.png" width="55" alt="DIT logo"><h3>Login</h3> 
-	</div>
-	<!--* End Header *-->
-	<!--* Main body *-->
-	<div role="main" class="ui-content">
-		<h1>Welcome to DIT GrangeMobile</h1>
-		<form class="material-form" id="loginform">
-			<label for="username">Username:</label>
-			<input type="text" name="username" id="username" value="">
-			<label for="password">Password:</label>
-			<input type="password" name="password" id="password" value="">
-			<input type="submit" value="Login">
-		</form>
-	</div>
-	<!--* End Main body *-->
-	<!--* Footer *-->
-	<div data-role="footer" data-position="fixed">
-		<p>&nbsp;</p>
-	</div>
-	<!--* End footer *-->
-</section>
-<!--** End Login page **-->
+
 <!--** Homepage **-->
 <section data-role="page" id="home">
 	<!--* Header *-->
@@ -107,7 +82,7 @@
 	<!--* End Main body *-->
 	<!--* Footer *-->
 	<div data-role="footer" data-position="fixed">
-		<p>&nbsp;</p>
+		<a class="ui-btn ui-btn-right ui-btn-inline" id="logout">Logout</a>
 	</div>
 	<!--* End footer *-->
 </section>
@@ -129,7 +104,7 @@
 	<!--* End Main body *-->
 	<!--* Footer *-->
 	<div data-role="footer" data-position="fixed">
-		<p>&nbsp;</p>
+		<a class="ui-btn ui-btn-right ui-btn-inline" id="logout">Logout</a>
 	</div>
 	<!--* End footer *-->
 
@@ -165,13 +140,12 @@
 		</article>
 	</div>
 	<!--* End Main body *-->
-	<!--* Footer *-->
+<!--* Footer *-->
 	<div data-role="footer" data-position="fixed">
-		<p>&nbsp;</p>
+
+		<a class="ui-btn ui-btn-right ui-btn-inline" id="logout">Logout</a>
 	</div>
 	<!--* End footer *-->
-
-
 </section>
 <!--** End Browse modules page **-->
 
@@ -200,11 +174,9 @@
 	<!--* End Main body *-->
 	<!--* Footer *-->
 	<div data-role="footer" data-position="fixed">
-		<p>&nbsp;</p>
+		<a class="ui-btn ui-btn-right ui-btn-inline" id="logout">Logout</a>
 	</div>
 	<!--* End footer *-->
-
-
 </section>
 <!--** End Browse modules page **-->
 
@@ -228,7 +200,7 @@
 	<!--* End Main body *-->
 	<!--* Footer *-->
 	<div data-role="footer" data-position="fixed">
-		<p>&nbsp;</p>
+		<a class="ui-btn ui-btn-right ui-btn-inline" id="logout">Logout</a>
 	</div>
 	<!--* End footer *-->
 
@@ -254,7 +226,7 @@
 	<!--* End Main body *-->
 	<!--* Footer *-->
 	<div data-role="footer" data-position="fixed">
-		<p>&nbsp;</p>
+		<a class="ui-btn ui-btn-right ui-btn-inline" id="logout">Logout</a>
 	</div>
 	<!--* End footer *-->
 
@@ -278,7 +250,7 @@
 	<!--* End Main body *-->
 	<!--* Footer *-->
 	<div data-role="footer" data-position="fixed">
-		<p>&nbsp;</p>
+		<a class="ui-btn ui-btn-right ui-btn-inline" id="logout">Logout</a>
 	</div>
 	<!--* End footer *-->
 
@@ -366,15 +338,41 @@
 		<!-- #get-dirs -->
 	</div>
 	<!-- End .ui-content -->
-		<!--* Footer *-->
+	<!--* Footer *-->
 	<div data-role="footer" data-position="fixed">
-		<p>&nbsp;</p>
+
+		<a class="ui-btn ui-btn-right ui-btn-inline" id="logout">Logout</a>
 	</div>
 	<!--* End footer *-->
 
 </section>
 <!--** End Google maps page **-->
-
+<!--** Login page **-->
+<section data-role="page" id="login">
+	<!--* Header *-->
+	<div data-role="header" data-position="fixed">
+		<img src="img/dit_logocol_reverse.png" width="55" alt="DIT logo"><h3>Login</h3> 
+	</div>
+	<!--* End Header *-->
+	<!--* Main body *-->
+	<div role="main" class="ui-content">
+		<h1>Welcome to DIT GrangeMobile</h1>
+		<form class="material-form" id="loginform">
+			<label for="username">Username:</label>
+			<input type="text" name="username" id="username" value="">
+			<label for="password">Password:</label>
+			<input type="password" name="password" id="password" value="">
+			<input type="submit" value="Login">
+		</form>
+	</div>
+	<!--* End Main body *-->
+	<!--* Footer *-->
+	<div data-role="footer" data-position="fixed">
+		<p>&nbsp;</p>
+	</div>
+	<!--* End footer *-->
+</section>
+<!--** End Login page **-->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh_EAaBpkQ_PNLu7AJneiyXt69f9R6Nzk"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="js/app.js">

@@ -276,7 +276,7 @@
 
 				//**See console to see the data**//
 				console.log(data) ;
-				//**See console to see the data**//
+				//**See console to see the data**// 
 				
 				var htmlInstructions = [] ;
 				//Map results returned

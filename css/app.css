@@ -127,7 +127,7 @@ padding: 0 16px ; background-color: #0060aa !important;
 	color: #676767;
 	margin-top: 36px;
 }
-
+.ui-content { position: relative; }
 .ui-input-text input:focus, .ui-input-search input:focus {
 		border-color: #0060aa;
 		border-width: 2px;
@@ -183,7 +183,7 @@ html body .ui-group-theme-a .ui-btn:hover, html body .ui-group-theme-a .ui-btn:f
 .list-item { padding: 16px 0 20px; border-bottom: 1px solid #ababab; }
 .list-item a:hover { text-decoration: none; /*color: inherit */}
 .list-item a .fa {
-	  position: fixed;
+	  position: absolute;
   right: 16px;
   font-size: 20px;
   font-weight: bold;
