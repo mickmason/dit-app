@@ -4,7 +4,9 @@ This project represents my submission for the final assignment for the Social Me
 
 Please see [the program description here]([http://www.dit.ie/postgrad/programmes/dt539bmscincreativedigitalmediapart-time/).
 
-I used jQuery mobile for the mobile behaviour. The app is set up using a single HTML page where each page has a `data-role="page"` attribute. I will recreate this using AngularJS and a Google Materials CSS framework as that is the basis for the app style. 
+_We were required to use jQuery mobile for the mobile behaviour_. 
+
+The app is set up using a single HTML page where each page has a `data-role="page"` attribute. I will recreate this using AngularJS and a Google Materials CSS framework as that is the basis for the app style. 
 
 ##Setup
 
